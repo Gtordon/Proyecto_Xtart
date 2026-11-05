@@ -20,4 +20,22 @@ Cada charla muestra:
 | Organización | Gestionar las charlas, ver las inscripciones y quién asistió | Validar la entrada |
 | Personal de acceso | Validar el QR en la puerta | Editar charlas, ver todas las reservas |
 
-s
+## 3. Reglas
+
+- Cada persona puede tener una sola reserva por charla.
+- Si no quedan plazas, no se puede reservar y se avisa con un mensaje.
+- No se puede reservar una charla que ya ha empezado.
+- Se puede cancelar una reserva hasta que empiece la charla.
+- Una reserva cancelada no ocupa plaza.
+- El QR lo genera el servidor, está ligado a la reserva y caduca a los 30 segundos. El servidor comprueba la hora con su propio reloj, nunca con la del móvil.
+- Un QR caducado se rechaza con un mensaje comprensible y no registra asistencia.
+- El QR se puede validar desde 30 minutos antes de la charla hasta que acaba.
+- No hay registro público: los usuarios de prueba los crea el equipo.
+
+## 4. Fuera de alcance
+
+Este proyecto no incluye:
+- Pagos
+- Lista de espera
+- Aplicación de móvil (solo web)
+- Registro público de usuarios
