@@ -7,12 +7,17 @@ use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class User extends Authenticatable
 {
     /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable;
 
+    // Perfiles de usuario (columna `role`)
+    public const ROLE_ATTENDEE = 'attendee';
+    public const ROLE_ORGANIZER = 'organizer';
+    public const ROLE_ACCESS_STAFF = 'access_staff';
     /**
      * The attributes that are mass assignable.
      *
@@ -22,6 +27,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
     ];
 
     /**
@@ -34,6 +40,11 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    // Reservas del usuario
+    public function reservations()
+    {
+        return $this->hasMany(Reservation::class);
+    }
     /**
      * Get the attributes that should be cast.
      *
