@@ -1,9 +1,5 @@
-<<<<<<< HEAD
-   .env
-   node_modules/
-   vendor/
-   .DS_Store
-=======
-`node_modules`
->>>>>>> 5414ef4 (creacion archivos frontend)
-front-end/dist/
+.env
+node_modules/
+vendor/
+.DS_Store
+dist/
