@@ -7,6 +7,7 @@ use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class User extends Authenticatable
@@ -14,7 +15,7 @@ class User extends Authenticatable
     /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable;
 
-    // Perfiles de usuario (columna `role`)
+    // Nombres de los perfiles (tabla `roles`, columna `name`)
     public const ROLE_ATTENDEE = 'attendee';
     public const ROLE_ORGANIZER = 'organizer';
     public const ROLE_ACCESS_STAFF = 'access_staff';
@@ -27,7 +28,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'role',
+        'role_id',
     ];
 
     /**
@@ -40,8 +41,20 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    // Perfil del usuario
+    public function role(): BelongsTo
+    {
+        return $this->belongsTo(Role::class);
+    }
+
+    // ¿Tiene este perfil? Ej: $user->hasRole(User::ROLE_ORGANIZER)
+    public function hasRole(string $name): bool
+    {
+        return $this->role?->name === $name;
+    }
+
     // Reservas del usuario
-    public function reservations()
+    public function reservations(): HasMany
     {
         return $this->hasMany(Reservation::class);
     }
