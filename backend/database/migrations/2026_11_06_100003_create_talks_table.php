@@ -13,7 +13,7 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->text('description')->nullable();
-            $table->string('speaker');
+            $table->foreignId('speaker_id')->constrained('speakers');
             $table->dateTime('starts_at');
             $table->dateTime('ends_at');
             $table->string('room');
@@ -21,8 +21,9 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        // El aforo tiene que ser un número positivo
+        // Reglas que protege la tabla: aforo positivo y la charla termina después de empezar
         DB::statement('ALTER TABLE talks ADD CONSTRAINT talks_capacity_positive CHECK (capacity > 0)');
+        DB::statement('ALTER TABLE talks ADD CONSTRAINT talks_ends_after_start CHECK (ends_at > starts_at)');
     }
 
     public function down(): void

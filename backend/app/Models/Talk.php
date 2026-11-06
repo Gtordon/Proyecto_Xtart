@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
@@ -14,7 +15,7 @@ class Talk extends Model
     protected $fillable = [
         'title',
         'description',
-        'speaker',
+        'speaker_id',
         'starts_at',
         'ends_at',
         'room',
@@ -28,6 +29,12 @@ class Talk extends Model
             'ends_at' => 'datetime',
             'capacity' => 'integer',
         ];
+    }
+
+    // Ponente de la charla
+    public function speaker(): BelongsTo
+    {
+        return $this->belongsTo(Speaker::class);
     }
 
     // Una charla tiene muchas reservas
