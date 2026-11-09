@@ -40,7 +40,7 @@ class DatabaseSeeder extends Seeder
 
         User::create([
             'name' => 'Oscar Organizador',
-            'email' => 'oranizacion@sabitech.test',
+            'email' => 'organizacion@sabitech.test',
             'password' => 'password',
             'role_id' => Role::where('name', Role::ORGANIZER)->first()->id,
         ]);
