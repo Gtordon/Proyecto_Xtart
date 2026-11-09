@@ -28,7 +28,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'Ana Asistente',
             'email' => 'ana@sabitech.test',
             'password' => 'password',
-            'role_id' => Role::where('name', Role::ATTENDEE)->fisrt()->id,
+            'role_id' => Role::where('name', Role::ATTENDEE)->first()->id,
         ]);
 
         User::create([
@@ -40,7 +40,7 @@ class DatabaseSeeder extends Seeder
 
         User::create([
             'name' => 'Oscar Organizador',
-            'email' => 'oranicazaion@sabitech.test',
+            'email' => 'oranizacion@sabitech.test',
             'password' => 'password',
             'role_id' => Role::where('name', Role::ORGANIZER)->first()->id,
         ]);
