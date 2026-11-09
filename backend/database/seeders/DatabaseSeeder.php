@@ -85,36 +85,35 @@ class DatabaseSeeder extends Seeder
             'starts_at' => now()->addDays(7)->setTime(14, 0),
             'ends_at' => now()->addDays(7)->setTime(15, 0),
             'room' => 'Sala 3',
-            'capacity' => 1,
+            'capacity' => 2,
         ]);
 
         //Reservas: Van despues de las charlas porque cada reserva a punta a una charla concreta
-    $ana = User::where('email', 'ana@sabitech.test')->first();
-    $alex = User::where('email', 'alex@sabitech.test')->first();
 
-    //Charla con una plaza libre
-    Reservation::create([
-        'user_id' => $ana->id,
-        'talk_id' => $charlaUnaPlaza->id,
-        'status' => Reservation::STATUS_CONFIRMED,
-        'reference' => 'RES-001',
-    ]);
+                $ana = User::where('email', 'ana@sabitech.test')->first();
+        $alex = User::where('email', 'alex@sabitech.test')->first();
 
-    //Charla completa
-    Reservation::create([
-        'user_id' => $alex->id,
-        'talk_id' => $charlaCompleta->id,
-        'status' => Reservation::STATUS_CONFIRMED,
-        'reference' => 'RES-002',
-    ]);
+        // Charla con una plaza libre
+        Reservation::create([
+            'user_id' => $ana->id,
+            'talk_id' => $charlaUnaPlaza->id,
+            'status' => Reservation::STATUS_CONFIRMED,
+            'reference' => 'RES-001',
+        ]);
 
-    Reservation::create([
-        'user_id' => $ana->id,
-        'talk_id' => $charlaCompleta->id,
-        'status' => Reservation::STATUS_CONFIRMED,
-        'reference' => 'RES-003',
-    ]);
-}
+        // Charla completa
+        Reservation::create([
+            'user_id' => $alex->id,
+            'talk_id' => $charlaCompleta->id,
+            'status' => Reservation::STATUS_CONFIRMED,
+            'reference' => 'RES-002',
+        ]);
 
-    
+        Reservation::create([
+            'user_id' => $ana->id,
+            'talk_id' => $charlaCompleta->id,
+            'status' => Reservation::STATUS_CONFIRMED,
+            'reference' => 'RES-003',
+        ]);
+    }
 }
