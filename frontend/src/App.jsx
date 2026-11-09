@@ -1,54 +1,69 @@
-import { useState } from 'react';
-
-const CHARLAS_INICIALES = [
-  { id: 1, titulo: 'Introducción a la IA en el desarrollo', plazas: 30, ponente: 'Ponente por confirmar' },
-  { id: 2, titulo: 'Seguridad en aplicaciones web', plazas: 20, ponente: 'Ponente por confirmar' },
-  { id: 3, titulo: 'Diseño accesible para todos', plazas: 25, ponente: 'Ponente por confirmar' },
-];
+import { useEffect, useState } from 'react';
+import { getCharlas, getCharla } from './api/talks.js';
+import ListaCharlas from './components/ListaCharlas.jsx';
+import DetalleCharla from './components/DetalleCharla.jsx';
 
 function App() {
-  // Estado: la lista de charlas y la charla que se está viendo
-  const [charlas, setCharlas] = useState(CHARLAS_INICIALES);
-  const [seleccionada, setSeleccionada] = useState(null);
+  // Lista de charlas que viene de la API
+  const [charlas, setCharlas] = useState([]);
+  const [cargando, setCargando] = useState(true);
+  const [error, setError] = useState('');
 
-  // Reservar: resta una plaza a la charla elegida, si quedan
+  // Charla abierta en el detalle (null = se ve la lista)
+  const [detalle, setDetalle] = useState(null);
+
+  // Al abrir la página, pedimos la lista a la API
+  useEffect(() => {
+    let cancelado = false;
+    getCharlas()
+      .then((datos) => {
+        if (!cancelado) setCharlas(datos);
+      })
+      .catch(() => {
+        if (!cancelado) setError('No se pudo conectar con el servidor. ¿Está encendido el backend?');
+      })
+      .finally(() => {
+        if (!cancelado) setCargando(false);
+      });
+    return () => { cancelado = true; };
+  }, []);
+
+  // Al elegir una charla, pedimos su detalle a la API
+  function abrirDetalle(id) {
+    getCharla(id)
+      .then(setDetalle)
+      .catch(() => setError('No se pudo cargar la charla.'));
+  }
+
+  // Reservar: de momento solo baja las plazas en pantalla
   function reservar(id) {
-    setCharlas(
-      charlas.map((c) =>
-        c.id === id && c.plazas > 0 ? { ...c, plazas: c.plazas - 1 } : c
+    setCharlas((actuales) =>
+      actuales.map((c) =>
+        c.id === id && c.available_seats > 0 ? { ...c, available_seats: c.available_seats - 1 } : c
       )
+    );
+    setDetalle((actual) =>
+      actual && actual.id === id && actual.available_seats > 0
+        ? { ...actual, available_seats: actual.available_seats - 1 }
+        : actual
     );
   }
 
-  // Si hay una charla seleccionada, mostramos su detalle
-  const charla = charlas.find((c) => c.id === seleccionada);
-
-  if (charla) {
-    return (
-      <main>
-        <button onClick={() => setSeleccionada(null)}>← Volver</button>
-        <h1>{charla.titulo}</h1>
-        <p>Ponente: {charla.ponente}</p>
-        <p>Plazas libres: {charla.plazas}</p>
-        <button onClick={() => reservar(charla.id)} disabled={charla.plazas === 0}>
-          {charla.plazas === 0 ? 'Completa' : 'Reservar plaza'}
-        </button>
-      </main>
-    );
+  if (detalle) {
+    return <DetalleCharla charla={detalle} onVolver={() => setDetalle(null)} onReservar={reservar} />;
   }
 
   return (
     <main>
       <h1>SABITECH WEB</h1>
       <h2>Charlas</h2>
-      <ul>
-        {charlas.map((c) => (
-          <li key={c.id}>
-            <button onClick={() => setSeleccionada(c.id)}>{c.titulo}</button>
-            {' '}· {c.plazas} plazas libres
-          </li>
-        ))}
-      </ul>
+
+      {cargando && <p>Cargando charlas…</p>}
+      {error && <p className="error">{error}</p>}
+      {!cargando && !error && charlas.length === 0 && <p>Todavía no hay charlas.</p>}
+      {!cargando && !error && charlas.length > 0 && (
+        <ListaCharlas charlas={charlas} onElegir={abrirDetalle} />
+      )}
     </main>
   );
 }
