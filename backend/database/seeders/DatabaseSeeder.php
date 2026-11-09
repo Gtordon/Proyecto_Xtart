@@ -96,7 +96,7 @@ class DatabaseSeeder extends Seeder
     Reservation::create([
         'user_id' => $ana->id,
         'talk_id' => $charlaUnaPlaza->id,
-        'status' => Reservation::CONFIRMED,
+        'status' => Reservation::STATUS_CONFIRMED,
         'reference' => 'RES-001',
     ]);
 
@@ -104,14 +104,14 @@ class DatabaseSeeder extends Seeder
     Reservation::create([
         'user_id' => $alex->id,
         'talk_id' => $charlaCompleta->id,
-        'status' => Reservation::CONFIRMED,
+        'status' => Reservation::STATUS_CONFIRMED,
         'reference' => 'RES-002',
     ]);
 
     Reservation::create([
         'user_id' => $ana->id,
         'talk_id' => $charlaCompleta->id,
-        'status' => Reservation::CONFIRMED,
+        'status' => Reservation::STATUS_CONFIRMED,
         'reference' => 'RES-003',
     ]);
 }
