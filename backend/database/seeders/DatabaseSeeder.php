@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Role;
-use App\Models\User;
 use App\Models\Speaker;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -23,6 +22,6 @@ class DatabaseSeeder extends Seeder
         Speaker::create(['name' => 'Laura Martin', 'bio' => 'Especialista en inteligencia artificial']);
         Speaker::create(['name' => 'Paco ibañez', 'bio' => 'Experto en cyberseguridad para las aplicaciones Web']);
         Speaker::create(['name' => 'Santiago García', 'bio' => 'Especialista en desarrollo de aplicaciones móviles']);
-        
+
     }
 }
