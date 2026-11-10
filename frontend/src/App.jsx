@@ -1,7 +1,10 @@
 import { useEffect, useState } from 'react';
-import { getCharlas, getCharla } from './api/talks.js';
+import { getCharlas, getCharla, reservarPlaza } from './api/talks.js';
 import ListaCharlas from './components/ListaCharlas.jsx';
 import DetalleCharla from './components/DetalleCharla.jsx';
+
+// Clave donde se guarda el token de Sanctum en el navegador
+const CLAVE_TOKEN = 'sabitech_token';
 
 function App() {
   // Lista de charlas que viene de la API
@@ -11,6 +14,26 @@ function App() {
 
   // Charla abierta en el detalle (null = se ve la lista)
   const [detalle, setDetalle] = useState(null);
+
+  // Token de la sesión (null = sin sesión iniciada)
+  const [token, setToken] = useState(() => localStorage.getItem(CLAVE_TOKEN));
+
+  // Guarda o borra la sesión en un solo sitio, para que el estado y el navegador vayan siempre a la par.
+  // El login llamará a guardarSesion(token) al entrar; al cerrar sesión o caducar, guardarSesion(null).
+  function guardarSesion(nuevoToken) {
+    if (nuevoToken) localStorage.setItem(CLAVE_TOKEN, nuevoToken);
+    else localStorage.removeItem(CLAVE_TOKEN);
+    setToken(nuevoToken || null);
+  }
+
+  // Si la sesión cambia en otra pestaña (login o logout), lo reflejamos aquí también
+  useEffect(() => {
+    function alCambiarSesion(evento) {
+      if (evento.key === CLAVE_TOKEN) setToken(evento.newValue);
+    }
+    window.addEventListener('storage', alCambiarSesion);
+    return () => window.removeEventListener('storage', alCambiarSesion);
+  }, []);
 
   // Al abrir la página, pedimos la lista a la API
   useEffect(() => {
@@ -35,22 +58,40 @@ function App() {
       .catch(() => setError('No se pudo cargar la charla.'));
   }
 
-  // Reservar: de momento solo baja las plazas en pantalla
-  function reservar(id) {
-    setCharlas((actuales) =>
-      actuales.map((c) =>
-        c.id === id && c.available_seats > 0 ? { ...c, available_seats: c.available_seats - 1 } : c
-      )
-    );
-    setDetalle((actual) =>
-      actual && actual.id === id && actual.available_seats > 0
-        ? { ...actual, available_seats: actual.available_seats - 1 }
-        : actual
-    );
+  // Cambia las plazas libres de una charla en la lista y en el detalle
+  function ajustarPlazas(id, calcular) {
+    setCharlas((actuales) => actuales.map((c) => (c.id === id ? { ...c, available_seats: calcular(c.available_seats) } : c)));
+    setDetalle((actual) => (actual && actual.id === id ? { ...actual, available_seats: calcular(actual.available_seats) } : actual));
+  }
+
+  // Reservar: la API identifica al usuario por el token.
+  // Si sale bien, baja una plaza. Si falla, reacciona según el "code" y relanza el error
+  // para que el detalle muestre el mensaje.
+  async function reservar(id) {
+    try {
+      await reservarPlaza(id, token);
+      ajustarPlazas(id, (plazas) => Math.max(0, plazas - 1));
+    } catch (e) {
+      if (e.code === 'unauthenticated') {
+        // Sesión caducada o inválida: se invalida y el detalle pedirá iniciar sesión
+        guardarSesion(null);
+      } else if (e.code === 'talk_full') {
+        // El servidor dice que no quedan plazas: lo reflejamos en pantalla
+        ajustarPlazas(id, () => 0);
+      }
+      throw e;
+    }
   }
 
   if (detalle) {
-    return <DetalleCharla charla={detalle} onVolver={() => setDetalle(null)} onReservar={reservar} />;
+    return (
+      <DetalleCharla
+        charla={detalle}
+        haySesion={Boolean(token)}
+        onVolver={() => setDetalle(null)}
+        onReservar={reservar}
+      />
+    );
   }
 
   return (
