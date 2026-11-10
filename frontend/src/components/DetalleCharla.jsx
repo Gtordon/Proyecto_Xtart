@@ -4,7 +4,8 @@ import { useState } from 'react';
 // La reserva necesita sesión iniciada: el servidor saca el usuario del token.
 function DetalleCharla({ charla, haySesion, onVolver, onReservar }) {
   const [enviando, setEnviando] = useState(false);
-  const [reservada, setReservada] = useState(false);
+  // Texto que sustituye al botón cuando ya hay reserva (recién hecha o anterior)
+  const [reservada, setReservada] = useState('');
   const [error, setError] = useState('');
   const completa = charla.available_seats === 0;
 
@@ -13,9 +14,11 @@ function DetalleCharla({ charla, haySesion, onVolver, onReservar }) {
     setEnviando(true);
     try {
       await onReservar(charla.id);
-      setReservada(true);
+      setReservada('Reserva confirmada.');
     } catch (e) {
-      setError(e.message);
+      // Si ya tenía reserva, no tiene sentido volver a pulsar: se quita el botón
+      if (e.code === 'already_reserved') setReservada(e.message);
+      else setError(e.message);
     } finally {
       setEnviando(false);
     }
@@ -23,14 +26,14 @@ function DetalleCharla({ charla, haySesion, onVolver, onReservar }) {
 
   let accion;
   if (reservada) {
-    accion = <p role="status">Reserva confirmada.</p>;
+    accion = <p role="status">{reservada}</p>;
   } else if (completa) {
     accion = <p>Esta charla está completa.</p>;
   } else if (!haySesion) {
     accion = <p>Inicia sesión para reservar una plaza.</p>;
   } else {
     accion = (
-      <button onClick={reservar} disabled={enviando}>
+      <button type="button" onClick={reservar} disabled={enviando}>
         {enviando ? 'Reservando…' : 'Reservar'}
       </button>
     );
@@ -38,7 +41,7 @@ function DetalleCharla({ charla, haySesion, onVolver, onReservar }) {
 
   return (
     <main>
-      <button onClick={onVolver}>← Volver</button>
+      <button type="button" onClick={onVolver}>← Volver</button>
       <h1>{charla.title}</h1>
       <p>Ponente: {charla.speaker}</p>
       <p>Plazas libres: {charla.available_seats}</p>

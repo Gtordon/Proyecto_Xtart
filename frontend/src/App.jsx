@@ -3,7 +3,7 @@ import { getCharlas, getCharla, reservarPlaza } from './api/talks.js';
 import ListaCharlas from './components/ListaCharlas.jsx';
 import DetalleCharla from './components/DetalleCharla.jsx';
 
-// Clave donde el login guardará el token de Sanctum. Mientras no exista el login, no hay sesión.
+// Clave donde se guarda el token de Sanctum en el navegador
 const CLAVE_TOKEN = 'sabitech_token';
 
 function App() {
@@ -17,6 +17,23 @@ function App() {
 
   // Token de la sesión (null = sin sesión iniciada)
   const [token, setToken] = useState(() => localStorage.getItem(CLAVE_TOKEN));
+
+  // Guarda o borra la sesión en un solo sitio, para que el estado y el navegador vayan siempre a la par.
+  // El login llamará a guardarSesion(token) al entrar; al cerrar sesión o caducar, guardarSesion(null).
+  function guardarSesion(nuevoToken) {
+    if (nuevoToken) localStorage.setItem(CLAVE_TOKEN, nuevoToken);
+    else localStorage.removeItem(CLAVE_TOKEN);
+    setToken(nuevoToken || null);
+  }
+
+  // Si la sesión cambia en otra pestaña (login o logout), lo reflejamos aquí también
+  useEffect(() => {
+    function alCambiarSesion(evento) {
+      if (evento.key === CLAVE_TOKEN) setToken(evento.newValue);
+    }
+    window.addEventListener('storage', alCambiarSesion);
+    return () => window.removeEventListener('storage', alCambiarSesion);
+  }, []);
 
   // Al abrir la página, pedimos la lista a la API
   useEffect(() => {
@@ -56,9 +73,8 @@ function App() {
       ajustarPlazas(id, (plazas) => Math.max(0, plazas - 1));
     } catch (e) {
       if (e.code === 'unauthenticated') {
-        // Sesión caducada o inválida: se borra el token y el detalle pedirá iniciar sesión
-        localStorage.removeItem(CLAVE_TOKEN);
-        setToken(null);
+        // Sesión caducada o inválida: se invalida y el detalle pedirá iniciar sesión
+        guardarSesion(null);
       } else if (e.code === 'talk_full') {
         // El servidor dice que no quedan plazas: lo reflejamos en pantalla
         ajustarPlazas(id, () => 0);
