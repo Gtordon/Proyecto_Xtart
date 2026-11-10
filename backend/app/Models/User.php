@@ -81,7 +81,7 @@ class User extends Authenticatable
     {
         return [
             'email_verified_at' => 'datetime',
-            'api_toke_expires_at' => 'datetime',
+            'api_token_expires_at' => 'datetime',
             'password' => 'hashed',
         ];
     }

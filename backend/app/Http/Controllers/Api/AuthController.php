@@ -37,4 +37,27 @@ class AuthController extends Controller
             ],
         ]);
     }
+
+    public function logout(Request $request): JsonResponse
+    {
+        $request->user()->forceFill([
+            'api_token' => null,
+            'api_token_expires_at' => null,
+        ])->save();
+
+        return response()->json(['message' => 'Sesión cerrada.']);
+    }
+
+    // GET /api/user -> quién soy
+    public function me(Request $request): JsonResponse
+    {
+        $user = $request->user();
+
+        return response()->json([
+            'id' => $user->id,
+            'name' => $user->name,
+            'email' => $user->email,
+            'role' => $user->role?->name,
+        ]);
+    }
 }
