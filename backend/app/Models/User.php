@@ -2,13 +2,13 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Str;
 
 class User extends Authenticatable
 {
@@ -39,6 +39,8 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+        'api_token',
+        'api_token_expires_at',
     ];
 
     // Perfil del usuario
@@ -51,6 +53,18 @@ class User extends Authenticatable
     public function hasRole(string $name): bool
     {
         return $this->role?->name === $name;
+    }
+
+    public function issueToken(): string
+    {
+    $token = Str::random(60);
+
+    $this->forceFill([
+        'api_token' => hash('sha256', $token),
+        'api_token_expires_at' => now()->addHours(8),   // la sesión dura 8 horas
+    ])->save();
+
+    return $token;
     }
 
     // Reservas del usuario
@@ -67,6 +81,7 @@ class User extends Authenticatable
     {
         return [
             'email_verified_at' => 'datetime',
+            'api_token_expires_at' => 'datetime',
             'password' => 'hashed',
         ];
     }
