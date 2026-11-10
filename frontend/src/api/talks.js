@@ -15,17 +15,23 @@ export async function getCharla(id) {
   return respuesta.json();
 }
 
+// Mensajes para cada código de error al reservar.
+// PROVISIONALES: Joan los confirmará al terminar la ruta y quedarán en docs/api.md.
+const ERRORES_RESERVA = {
+  401: 'Tienes que iniciar sesión para reservar.',
+  403: 'Tu usuario no puede reservar charlas.',
+  404: 'Esta charla no existe o el servidor todavía no tiene la ruta de reservas.',
+  409: 'Ya tienes esta reserva o no quedan plazas libres.',
+  422: 'Ya tienes esta reserva o no quedan plazas libres.',
+};
+
 // POST /api/talks/{id}/reservations → reservar una plaza.
-// La ruta todavía no está confirmada con el backend: si cambia, se cambia aquí.
-export async function reservarPlaza(id, datos) {
+// Sin cuerpo: el servidor saca el usuario del token de la sesión (Sanctum).
+export async function reservarPlaza(id, token) {
   const respuesta = await fetch(`${BASE_URL}/talks/${id}/reservations`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-    body: JSON.stringify(datos),
+    headers: { Accept: 'application/json', Authorization: `Bearer ${token}` },
   });
-  if (respuesta.ok) return respuesta.json();
-  if (respuesta.status === 422) throw new Error('El servidor no acepta los datos. Revisa el formulario.');
-  if (respuesta.status === 409) throw new Error('Ya no quedan plazas libres en esta charla.');
-  if (respuesta.status === 404) throw new Error('El servidor todavía no tiene la ruta de reservas.');
-  throw new Error(`Error ${respuesta.status} al reservar.`);
+  if (respuesta.ok) return respuesta.status === 204 ? null : respuesta.json();
+  throw new Error(ERRORES_RESERVA[respuesta.status] ?? `Error ${respuesta.status} al reservar.`);
 }

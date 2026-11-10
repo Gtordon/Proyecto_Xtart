@@ -3,6 +3,9 @@ import { getCharlas, getCharla, reservarPlaza } from './api/talks.js';
 import ListaCharlas from './components/ListaCharlas.jsx';
 import DetalleCharla from './components/DetalleCharla.jsx';
 
+// Clave donde el login guardará el token de Sanctum. Mientras no exista el login, no hay sesión.
+const CLAVE_TOKEN = 'sabitech_token';
+
 function App() {
   // Lista de charlas que viene de la API
   const [charlas, setCharlas] = useState([]);
@@ -11,6 +14,9 @@ function App() {
 
   // Charla abierta en el detalle (null = se ve la lista)
   const [detalle, setDetalle] = useState(null);
+
+  // Token de la sesión (null = sin sesión iniciada)
+  const [token] = useState(() => localStorage.getItem(CLAVE_TOKEN));
 
   // Al abrir la página, pedimos la lista a la API
   useEffect(() => {
@@ -35,10 +41,10 @@ function App() {
       .catch(() => setError('No se pudo cargar la charla.'));
   }
 
-  // Reservar: envía los datos a la API. Si el servidor rechaza la reserva, lanza el error
-  // para que el formulario lo muestre. Si sale bien, baja una plaza en pantalla.
-  async function reservar(id, datos) {
-    await reservarPlaza(id, datos);
+  // Reservar: la API identifica al usuario por el token. Si rechaza la reserva, lanza el error
+  // para que el detalle lo muestre. Si sale bien, baja una plaza en pantalla.
+  async function reservar(id) {
+    await reservarPlaza(id, token);
     setCharlas((actuales) =>
       actuales.map((c) =>
         c.id === id && c.available_seats > 0 ? { ...c, available_seats: c.available_seats - 1 } : c
@@ -52,7 +58,14 @@ function App() {
   }
 
   if (detalle) {
-    return <DetalleCharla charla={detalle} onVolver={() => setDetalle(null)} onReservar={reservar} />;
+    return (
+      <DetalleCharla
+        charla={detalle}
+        haySesion={Boolean(token)}
+        onVolver={() => setDetalle(null)}
+        onReservar={reservar}
+      />
+    );
   }
 
   return (
