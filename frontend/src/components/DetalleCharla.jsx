@@ -1,5 +1,6 @@
-// Detalle de una charla con su botón de reservar.
-// La reserva todavía no se guarda en el servidor: eso llega con el login y las reservas.
+import FormularioReserva from './FormularioReserva.jsx';
+
+// Detalle de una charla: datos y, si quedan plazas, el formulario de reserva.
 function DetalleCharla({ charla, onVolver, onReservar }) {
   const completa = charla.available_seats === 0;
 
@@ -9,9 +10,12 @@ function DetalleCharla({ charla, onVolver, onReservar }) {
       <h1>{charla.title}</h1>
       <p>Ponente: {charla.speaker}</p>
       <p>Plazas libres: {charla.available_seats}</p>
-      <button onClick={() => onReservar(charla.id)} disabled={completa}>
-        {completa ? 'Completa' : 'Reservar plaza'}
-      </button>
+
+      {completa ? (
+        <p>Esta charla está completa.</p>
+      ) : (
+        <FormularioReserva onReservar={(datos) => onReservar(charla.id, datos)} />
+      )}
     </main>
   );
 }

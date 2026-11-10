@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getCharlas, getCharla } from './api/talks.js';
+import { getCharlas, getCharla, reservarPlaza } from './api/talks.js';
 import ListaCharlas from './components/ListaCharlas.jsx';
 import DetalleCharla from './components/DetalleCharla.jsx';
 
@@ -35,8 +35,10 @@ function App() {
       .catch(() => setError('No se pudo cargar la charla.'));
   }
 
-  // Reservar: de momento solo baja las plazas en pantalla
-  function reservar(id) {
+  // Reservar: envía los datos a la API. Si el servidor rechaza la reserva, lanza el error
+  // para que el formulario lo muestre. Si sale bien, baja una plaza en pantalla.
+  async function reservar(id, datos) {
+    await reservarPlaza(id, datos);
     setCharlas((actuales) =>
       actuales.map((c) =>
         c.id === id && c.available_seats > 0 ? { ...c, available_seats: c.available_seats - 1 } : c
