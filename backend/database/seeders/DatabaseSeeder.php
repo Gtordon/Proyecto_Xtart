@@ -18,9 +18,9 @@ class DatabaseSeeder extends Seeder
      * Seed the application's database.
      */
     public function run(): void{
-        Role::create(['name' => Role::ATTENDEE, 'label' => 'Asistente']);
-        Role::create(['name' => Role::ORGANIZER, 'label' => 'Organizador']);
-        Role::create(['name' => Role::ACCESS_STAFF,'label' => 'Personal de Acceso']);
+        Role::firstOrCreate(['name' => Role::ATTENDEE], ['label' => 'Asistente']);
+        Role::firstOrCreate(['name' => Role::ORGANIZER], ['label' => 'Organizador']);
+        Role::firstOrCreate(['name' => Role::ACCESS_STAFF], ['label' => 'Personal de Acceso']);
 
         Speaker::create(['name' => 'Laura Martin', 'bio' => 'Especialista en inteligencia artificial']);
         Speaker::create(['name' => 'Paco ibañez', 'bio' => 'Experto en cyberseguridad para las aplicaciones Web']);
