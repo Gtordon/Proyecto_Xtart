@@ -16,7 +16,7 @@ function App() {
   const [detalle, setDetalle] = useState(null);
 
   // Token de la sesión (null = sin sesión iniciada)
-  const [token] = useState(() => localStorage.getItem(CLAVE_TOKEN));
+  const [token, setToken] = useState(() => localStorage.getItem(CLAVE_TOKEN));
 
   // Al abrir la página, pedimos la lista a la API
   useEffect(() => {
@@ -41,20 +41,30 @@ function App() {
       .catch(() => setError('No se pudo cargar la charla.'));
   }
 
-  // Reservar: la API identifica al usuario por el token. Si rechaza la reserva, lanza el error
-  // para que el detalle lo muestre. Si sale bien, baja una plaza en pantalla.
+  // Cambia las plazas libres de una charla en la lista y en el detalle
+  function ajustarPlazas(id, calcular) {
+    setCharlas((actuales) => actuales.map((c) => (c.id === id ? { ...c, available_seats: calcular(c.available_seats) } : c)));
+    setDetalle((actual) => (actual && actual.id === id ? { ...actual, available_seats: calcular(actual.available_seats) } : actual));
+  }
+
+  // Reservar: la API identifica al usuario por el token.
+  // Si sale bien, baja una plaza. Si falla, reacciona según el "code" y relanza el error
+  // para que el detalle muestre el mensaje.
   async function reservar(id) {
-    await reservarPlaza(id, token);
-    setCharlas((actuales) =>
-      actuales.map((c) =>
-        c.id === id && c.available_seats > 0 ? { ...c, available_seats: c.available_seats - 1 } : c
-      )
-    );
-    setDetalle((actual) =>
-      actual && actual.id === id && actual.available_seats > 0
-        ? { ...actual, available_seats: actual.available_seats - 1 }
-        : actual
-    );
+    try {
+      await reservarPlaza(id, token);
+      ajustarPlazas(id, (plazas) => Math.max(0, plazas - 1));
+    } catch (e) {
+      if (e.code === 'unauthenticated') {
+        // Sesión caducada o inválida: se borra el token y el detalle pedirá iniciar sesión
+        localStorage.removeItem(CLAVE_TOKEN);
+        setToken(null);
+      } else if (e.code === 'talk_full') {
+        // El servidor dice que no quedan plazas: lo reflejamos en pantalla
+        ajustarPlazas(id, () => 0);
+      }
+      throw e;
+    }
   }
 
   if (detalle) {

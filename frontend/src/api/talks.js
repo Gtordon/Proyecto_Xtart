@@ -15,23 +15,43 @@ export async function getCharla(id) {
   return respuesta.json();
 }
 
-// Mensajes para cada código de error al reservar.
-// PROVISIONALES: Joan los confirmará al terminar la ruta y quedarán en docs/api.md.
-const ERRORES_RESERVA = {
-  401: 'Tienes que iniciar sesión para reservar.',
-  403: 'Tu usuario no puede reservar charlas.',
-  404: 'Esta charla no existe o el servidor todavía no tiene la ruta de reservas.',
-  409: 'Ya tienes esta reserva o no quedan plazas libres.',
-  422: 'Ya tienes esta reserva o no quedan plazas libres.',
+// Mensajes del frontend según el "code" que devuelve la API (contrato acordado con Joan).
+// Se decide por "code" y no por el texto de "message" ni por el número: hay dos 409 distintos.
+const MENSAJES_RESERVA = {
+  unauthenticated: 'No has iniciado sesión o tu sesión ha caducado. Vuelve a entrar.',
+  forbidden_role: 'Solo los asistentes pueden reservar charlas.',
+  already_reserved: 'Ya tienes una reserva en esta charla.',
+  talk_full: 'No quedan plazas libres en esta charla.',
+  talk_started: 'Esta charla ya ha empezado.',
 };
+
+// Error de reserva con el "code" de la API, para que la aplicación reaccione (p. ej. cerrar sesión).
+export class ErrorReserva extends Error {
+  constructor(mensaje, code, status) {
+    super(mensaje);
+    this.code = code;
+    this.status = status;
+  }
+}
 
 // POST /api/talks/{id}/reservations → reservar una plaza.
 // Sin cuerpo: el servidor saca el usuario del token de la sesión (Sanctum).
+// 201 → {"id", "talk_id", "status"}. Errores → {"message", "code"}.
 export async function reservarPlaza(id, token) {
   const respuesta = await fetch(`${BASE_URL}/talks/${id}/reservations`, {
     method: 'POST',
     headers: { Accept: 'application/json', Authorization: `Bearer ${token}` },
   });
-  if (respuesta.ok) return respuesta.status === 204 ? null : respuesta.json();
-  throw new Error(ERRORES_RESERVA[respuesta.status] ?? `Error ${respuesta.status} al reservar.`);
+  if (respuesta.ok) return respuesta.json();
+
+  let cuerpo = {};
+  try {
+    cuerpo = await respuesta.json();
+  } catch {
+    // Respuesta sin JSON: nos quedamos con el número de error
+  }
+  const code = cuerpo.code ?? null;
+  let mensaje = MENSAJES_RESERVA[code];
+  if (!mensaje) mensaje = respuesta.status === 404 ? 'No se ha encontrado la charla.' : `Error ${respuesta.status} al reservar.`;
+  throw new ErrorReserva(mensaje, code, respuesta.status);
 }
