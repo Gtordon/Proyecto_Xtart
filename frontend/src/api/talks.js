@@ -60,3 +60,29 @@ export async function reservarPlaza(id, token) {
   if (!mensaje) mensaje = respuesta.status === 404 ? 'No se ha encontrado la charla.' : `Error ${respuesta.status} al reservar.`;
   throw new ErrorReserva(mensaje, code, respuesta.status);
 }
+
+// POST /api/login → inicia sesión con correo y contraseña.
+// 200 → {"token", "user"}. Error → {"message", "code"} con code "invalid_credentials".
+export async function iniciarSesion(email, password) {
+  let respuesta;
+  try {
+    respuesta = await fetch(`${BASE_URL}/login`, {
+      method: 'POST',
+      headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password }),
+    });
+  } catch {
+    // El servidor no responde (backend apagado)
+    throw new Error('No se pudo conectar con el servidor. ¿Está encendido el backend?');
+  }
+
+  if (respuesta.ok) return respuesta.json();
+
+  let cuerpo = {};
+  try {
+    cuerpo = await respuesta.json();
+  } catch {
+    // Respuesta sin JSON: nos quedamos con el número de error
+  }
+  throw new Error(cuerpo.message ?? `Error ${respuesta.status} al iniciar sesión.`);
+}

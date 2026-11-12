@@ -56,7 +56,7 @@ function App() {
       <Routes>
         <Route path="/" element={<CatalogPage charlas={charlas} cargando={cargando} error={error} />} />
         <Route path="/charlas/:id" element={<TalkPage token={token} onSesionInvalida={() => guardarSesion(null)} />} />
-        <Route path="/login" element={<LoginPage />} />
+          <Route path="/login" element={<LoginPage onLogin={guardarSesion} />} />
         <Route path="/mis-reservas" element={<MyReservationsPage />} />
       </Routes>
     </>
