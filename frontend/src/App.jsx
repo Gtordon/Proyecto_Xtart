@@ -1,32 +1,31 @@
 import { useEffect, useState } from 'react';
-import { getCharlas, getCharla, reservarPlaza } from './api/talks.js';
-import ListaCharlas from './components/ListaCharlas.jsx';
-import DetalleCharla from './components/DetalleCharla.jsx';
+import { Route, Routes } from 'react-router';
+import { getCharlas } from './api/talks.js';
+import Cabecera from './components/Cabecera.jsx';
+import CatalogPage from './pages/CatalogPage.jsx';
+import TalkPage from './pages/TalkPage.jsx';
+import LoginPage from './pages/LoginPage.jsx';
+import MyReservationsPage from './pages/MyReservationsPage.jsx';
 
-// Clave donde se guarda el token de Sanctum en el navegador
+// Clave donde se guarda el token en el navegador
 const CLAVE_TOKEN = 'sabitech_token';
 
 function App() {
-  // Lista de charlas que viene de la API
   const [charlas, setCharlas] = useState([]);
   const [cargando, setCargando] = useState(true);
   const [error, setError] = useState('');
 
-  // Charla abierta en el detalle (null = se ve la lista)
-  const [detalle, setDetalle] = useState(null);
-
   // Token de la sesión (null = sin sesión iniciada)
   const [token, setToken] = useState(() => localStorage.getItem(CLAVE_TOKEN));
 
-  // Guarda o borra la sesión en un solo sitio, para que el estado y el navegador vayan siempre a la par.
-  // El login llamará a guardarSesion(token) al entrar; al cerrar sesión o caducar, guardarSesion(null).
+  // Guarda o borra la sesión en un solo sitio, para que el estado y el navegador vayan a la par
   function guardarSesion(nuevoToken) {
     if (nuevoToken) localStorage.setItem(CLAVE_TOKEN, nuevoToken);
     else localStorage.removeItem(CLAVE_TOKEN);
     setToken(nuevoToken || null);
   }
 
-  // Si la sesión cambia en otra pestaña (login o logout), lo reflejamos aquí también
+  // Si la sesión cambia en otra pestaña, lo reflejamos aquí también
   useEffect(() => {
     function alCambiarSesion(evento) {
       if (evento.key === CLAVE_TOKEN) setToken(evento.newValue);
@@ -35,7 +34,7 @@ function App() {
     return () => window.removeEventListener('storage', alCambiarSesion);
   }, []);
 
-  // Al abrir la página, pedimos la lista a la API
+  // Al abrir la web, pedimos la lista de charlas a la API
   useEffect(() => {
     let cancelado = false;
     getCharlas()
@@ -51,61 +50,16 @@ function App() {
     return () => { cancelado = true; };
   }, []);
 
-  // Al elegir una charla, pedimos su detalle a la API
-  function abrirDetalle(id) {
-    getCharla(id)
-      .then(setDetalle)
-      .catch(() => setError('No se pudo cargar la charla.'));
-  }
-
-  // Cambia las plazas libres de una charla en la lista y en el detalle
-  function ajustarPlazas(id, calcular) {
-    setCharlas((actuales) => actuales.map((c) => (c.id === id ? { ...c, available_seats: calcular(c.available_seats) } : c)));
-    setDetalle((actual) => (actual && actual.id === id ? { ...actual, available_seats: calcular(actual.available_seats) } : actual));
-  }
-
-  // Reservar: la API identifica al usuario por el token.
-  // Si sale bien, baja una plaza. Si falla, reacciona según el "code" y relanza el error
-  // para que el detalle muestre el mensaje.
-  async function reservar(id) {
-    try {
-      await reservarPlaza(id, token);
-      ajustarPlazas(id, (plazas) => Math.max(0, plazas - 1));
-    } catch (e) {
-      if (e.code === 'unauthenticated') {
-        // Sesión caducada o inválida: se invalida y el detalle pedirá iniciar sesión
-        guardarSesion(null);
-      } else if (e.code === 'talk_full') {
-        // El servidor dice que no quedan plazas: lo reflejamos en pantalla
-        ajustarPlazas(id, () => 0);
-      }
-      throw e;
-    }
-  }
-
-  if (detalle) {
-    return (
-      <DetalleCharla
-        charla={detalle}
-        haySesion={Boolean(token)}
-        onVolver={() => setDetalle(null)}
-        onReservar={reservar}
-      />
-    );
-  }
-
   return (
-    <main>
-      <h1>SABITECH WEB</h1>
-      <h2>Charlas</h2>
-
-      {cargando && <p>Cargando charlas…</p>}
-      {error && <p className="error">{error}</p>}
-      {!cargando && !error && charlas.length === 0 && <p>Todavía no hay charlas.</p>}
-      {!cargando && !error && charlas.length > 0 && (
-        <ListaCharlas charlas={charlas} onElegir={abrirDetalle} />
-      )}
-    </main>
+    <>
+      <Cabecera haySesion={Boolean(token)} onSalir={() => guardarSesion(null)} />
+      <Routes>
+        <Route path="/" element={<CatalogPage charlas={charlas} cargando={cargando} error={error} />} />
+        <Route path="/charlas/:id" element={<TalkPage token={token} onSesionInvalida={() => guardarSesion(null)} />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/mis-reservas" element={<MyReservationsPage />} />
+      </Routes>
+    </>
   );
 }
 
