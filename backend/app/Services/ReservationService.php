@@ -34,12 +34,11 @@ class ReservationService
                 throw new ReservationException('Esta charla ya ha empezado.', 'talk_started', 409);
             }
 
-            $yaReservada = Reservation::where('user_id', $user->id)
+            $anterior = Reservation::where('user_id', $user->id)
                 ->where('talk_id', $talk->id)
-                ->where('status', Reservation::STATUS_CONFIRMED)
-                ->exists();
+                ->first();
 
-            if ($yaReservada) {
+            if ($anterior && $anterior->status === Reservation::STATUS_CONFIRMED) {
                 throw new ReservationException('Ya tienes una reserva en esta charla.', 'already_reserved', 409);
             }
 
@@ -50,6 +49,15 @@ class ReservationService
 
             if ($ocupadas >= $talk->capacity) {
                 throw new ReservationException('No quedan plazas libres en esta charla.', 'talk_full', 409);
+            }
+                        
+            if ($anterior) {
+                $anterior->update([
+                    'status' => Reservation::STATUS_CONFIRMED,
+                    'cancelled_at' => null,
+                ]);
+
+                return $anterior;
             }
             
             return Reservation::create([

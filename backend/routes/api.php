@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/talks', [TalkController::class, 'index']);
 Route::get('/talks/{talk}', [TalkController::class, 'show']);
-Route::get('/reservations', [ReservationController::class, 'index']);
 
 Route::post('/login', [AuthController::class, 'login'])->middleware('throttle:10,1');
 
