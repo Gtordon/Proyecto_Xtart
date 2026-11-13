@@ -1,126 +1,102 @@
-// Llamadas al backend de SABITECH (Laravel). Todas las peticiones pasan por aquí.
-const BASE_URL = 'http://127.0.0.1:8000/api';
+import { useCallback, useEffect, useState } from 'react';
+import { Route, Routes, useLocation } from 'react-router';
+import { cerrarSesionApi, getCharlas, getUsuario } from './api/talks.js';
+import Cabecera from './components/Cabecera.jsx';
+import CatalogPage from './pages/CatalogPage.jsx';
+import TalkPage from './pages/TalkPage.jsx';
+import LoginPage from './pages/LoginPage.jsx';
+import MyReservationsPage from './pages/MyReservationsPage.jsx';
 
-// GET /api/talks → lista de charlas
-export async function getCharlas() {
-  const respuesta = await fetch(`${BASE_URL}/talks`);
-  if (!respuesta.ok) throw new Error(`Error ${respuesta.status} al cargar las charlas`);
-  return respuesta.json();
-}
+// Clave donde se guarda el token en el navegador
+const CLAVE_TOKEN = 'sabitech_token';
 
-// GET /api/talks/{id} → detalle de una charla
-export async function getCharla(id) {
-  const respuesta = await fetch(`${BASE_URL}/talks/${id}`);
-  if (!respuesta.ok) throw new Error(`Error ${respuesta.status} al cargar la charla`);
-  return respuesta.json();
-}
+function App() {
+  const location = useLocation();
+  const [charlas, setCharlas] = useState([]);
+  const [cargando, setCargando] = useState(true);
+  const [error, setError] = useState('');
 
-// Mensajes del frontend según el "code" que devuelve la API (contrato acordado con Joan).
-// Se decide por "code" y no por el texto de "message" ni por el número: hay dos 409 distintos.
-const MENSAJES_RESERVA = {
-  unauthenticated: 'No has iniciado sesión o tu sesión ha caducado. Vuelve a entrar.',
-  forbidden_role: 'Solo los asistentes pueden reservar charlas.',
-  already_reserved: 'Ya tienes una reserva en esta charla.',
-  talk_full: 'No quedan plazas libres en esta charla.',
-  talk_started: 'Esta charla ya ha empezado.',
-};
+  // Token de la sesión (null = sin sesión iniciada)
+  const [token, setToken] = useState(() => localStorage.getItem(CLAVE_TOKEN));
 
-// Error de reserva con el "code" de la API, para que la aplicación reaccione (p. ej. cerrar sesión).
-export class ErrorReserva extends Error {
-  constructor(mensaje, code, status) {
-    super(mensaje);
-    this.code = code;
-    this.status = status;
-  }
-}
+  // Usuario de la sesión: nombre, correo y rol (null = aún no se sabe o no hay sesión)
+  const [usuario, setUsuario] = useState(null);
 
-// POST /api/talks/{id}/reservations → reservar una plaza.
-// Autenticación por token de Sanctum (Authorization: Bearer), como fija el contrato de la API.
-// Sin cuerpo: el servidor saca el usuario del token.
-// 201 → {"id", "talk_id", "status"}. Errores → {"message", "code"}.
-export async function reservarPlaza(id, token) {
-  // Sin token no se llama a la API (así nunca se envía "Bearer null")
-  if (!token) throw new ErrorReserva(MENSAJES_RESERVA.unauthenticated, 'unauthenticated', 401);
+  // Guarda o borra la sesión en un solo sitio, para que el estado y el navegador vayan a la par
+  const guardarSesion = useCallback((nuevoToken) => {
+    if (nuevoToken) localStorage.setItem(CLAVE_TOKEN, nuevoToken);
+    else localStorage.removeItem(CLAVE_TOKEN);
+    setToken(nuevoToken || null);
+  }, []);
 
-  const respuesta = await fetch(`${BASE_URL}/talks/${id}/reservations`, {
-    method: 'POST',
-    headers: { Accept: 'application/json', Authorization: `Bearer ${token}` },
-  });
-  if (respuesta.ok) return respuesta.json();
+  // Sesión caducada o inválida: se borra el token (el usuario verá que tiene que entrar otra vez)
+  const sesionInvalida = useCallback(() => guardarSesion(null), [guardarSesion]);
 
-  let cuerpo = {};
-  try {
-    cuerpo = await respuesta.json();
-  } catch {
-    // Respuesta sin JSON: nos quedamos con el número de error
+  // Cerrar sesión: primero se invalida el token en el servidor y después se borra en el navegador
+  async function salir() {
+    await cerrarSesionApi(token);
+    guardarSesion(null);
   }
 
-  // Un 401 siempre es sesión no válida, aunque la respuesta no traiga "code"
-  const code = cuerpo.code ?? (respuesta.status === 401 ? 'unauthenticated' : null);
-  let mensaje = MENSAJES_RESERVA[code];
-  if (!mensaje) mensaje = respuesta.status === 404 ? 'No se ha encontrado la charla.' : `Error ${respuesta.status} al reservar.`;
-  throw new ErrorReserva(mensaje, code, respuesta.status);
-}
-
-// POST /api/login → inicia sesión con correo y contraseña.
-// 200 → {"token", "user"}. Error → {"message", "code"} con code "invalid_credentials".
-export async function iniciarSesion(email, password) {
-  let respuesta;
-  try {
-    respuesta = await fetch(`${BASE_URL}/login`, {
-      method: 'POST',
-      headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password }),
-    });
-  } catch {
-    // El servidor no responde (backend apagado)
-    throw new Error('No se pudo conectar con el servidor. ¿Está encendido el backend?');
-  }
-
-  if (respuesta.ok) return respuesta.json();
-
-  let cuerpo = {};
-  try {
-    cuerpo = await respuesta.json();
-  } catch {
-    // Respuesta sin JSON: nos quedamos con el número de error
-  }
-  throw new Error(cuerpo.message ?? `Error ${respuesta.status} al iniciar sesión.`);
-}
-
-// GET /api/user → quién es el usuario del token: {"id", "name", "email", "role"}.
-// Si la sesión no es válida, el error lleva status 401 para que la aplicación la cierre.
-export async function getUsuario(token) {
-  const respuesta = await fetch(`${BASE_URL}/user`, {
-    headers: { Accept: 'application/json', Authorization: `Bearer ${token}` },
-  });
-
-  if (!respuesta.ok) {
-    const error = new Error(`Error ${respuesta.status} al cargar el usuario`);
-    error.status = respuesta.status;
-    throw error;
-  }
-
-  return respuesta.json();
-}
-
-// POST /api/logout → invalida el token en el servidor.
-// Si no hay conexión, no pasa nada: la sesión se cierra igualmente en el navegador.
-export async function cerrarSesionApi(token) {
-  if (!token) return;
-
-  try {
-    const respuesta = await fetch(`${BASE_URL}/logout`, {
-      method: 'POST',
-      headers: { Accept: 'application/json', Authorization: `Bearer ${token}` },
-    });
-
-    if (!respuesta.ok && respuesta.status !== 401) {
-      throw new Error(`Error ${respuesta.status} al cerrar sesión`);
+  // Si la sesión cambia en otra pestaña, lo reflejamos aquí también
+  useEffect(() => {
+    function alCambiarSesion(evento) {
+      if (evento.key === CLAVE_TOKEN) setToken(evento.newValue);
     }
-  } catch {
-    // Sin conexión: el token caducará solo en el servidor.
-    // La sesión local ya se cerró en la app.
-  }
+    window.addEventListener('storage', alCambiarSesion);
+    return () => window.removeEventListener('storage', alCambiarSesion);
+  }, []);
+
+  // Con sesión, pedimos quién es el usuario. Si el servidor responde 401, la sesión ha caducado.
+  useEffect(() => {
+    if (!token) {
+      setUsuario(null);
+      return undefined;
+    }
+    let cancelado = false;
+    getUsuario(token)
+      .then((datos) => {
+        if (!cancelado) setUsuario(datos);
+      })
+      .catch((e) => {
+        if (!cancelado && e.status === 401) guardarSesion(null);
+      });
+    return () => { cancelado = true; };
+  }, [token, guardarSesion]);
+
+  // Cada vez que se entra en el catálogo, pedimos la lista otra vez a la API.
+  // Así las plazas libres están al día después de reservar, sin recargar la página.
+  const enCatalogo = location.pathname === '/';
+  useEffect(() => {
+    if (!enCatalogo) return undefined;
+    let cancelado = false;
+    getCharlas()
+      .then((datos) => {
+        if (!cancelado) {
+          setCharlas(datos);
+          setError('');
+        }
+      })
+      .catch(() => {
+        if (!cancelado) setError('No se pudo conectar con el servidor. ¿Está encendido el backend?');
+      })
+      .finally(() => {
+        if (!cancelado) setCargando(false);
+      });
+    return () => { cancelado = true; };
+  }, [enCatalogo]);
+
+  return (
+    <>
+      <Cabecera haySesion={Boolean(token)} usuario={usuario} onSalir={salir} />
+      <Routes>
+        <Route path="/" element={<CatalogPage charlas={charlas} cargando={cargando} error={error} />} />
+        <Route path="/charlas/:id" element={<TalkPage token={token} onSesionInvalida={sesionInvalida} />} />
+        <Route path="/login" element={<LoginPage onLogin={guardarSesion} />} />
+        <Route path="/mis-reservas" element={<MyReservationsPage token={token} onSesionInvalida={sesionInvalida} />} />
+      </Routes>
+    </>
+  );
 }
 
+export default App;
