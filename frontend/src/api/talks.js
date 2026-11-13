@@ -101,6 +101,22 @@ export async function getUsuario(token) {
   return respuesta.json();
 }
 
+// GET /api/reservations → reservas del usuario del token.
+// Formato PROVISIONAL, a confirmar con Joan cuando haga la ruta:
+// [{"id", "reference", "status": "confirmed" | "cancelled", "talk": {"id", "title", "starts_at", "room"}}]
+// Los errores llevan "status" (401 = sesión caducada, 404 = la ruta aún no existe en el servidor).
+export async function getMisReservas(token) {
+  const respuesta = await fetch(`${BASE_URL}/reservations`, {
+    headers: { Accept: 'application/json', Authorization: `Bearer ${token}` },
+  });
+  if (!respuesta.ok) {
+    const error = new Error(`Error ${respuesta.status} al cargar tus reservas`);
+    error.status = respuesta.status;
+    throw error;
+  }
+  return respuesta.json();
+}
+
 // POST /api/logout → invalida el token en el servidor.
 // Si no hay conexión, no pasa nada: la sesión se cierra igualmente en el navegador.
 export async function cerrarSesionApi(token) {
