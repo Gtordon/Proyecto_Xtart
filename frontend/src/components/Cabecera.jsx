@@ -1,7 +1,7 @@
 import { Link } from "react-router";
 
-//Cabecera con enlaces entre paginas.
-function Cabecera({haySesion, onSalir}) {
+// Cabecera con enlaces entre páginas. Con sesión iniciada, muestra el nombre del usuario y el botón Salir.
+function Cabecera({ haySesion, usuario, onSalir }) {
     return (
         <header>
             <nav>
@@ -10,7 +10,11 @@ function Cabecera({haySesion, onSalir}) {
                 <Link to="/mis-reservas">Mis Reservas</Link>
                 {' . '}
                 {haySesion ? (
-                    <button onClick={onSalir}>Salir</button>
+                    <>
+                        {usuario && <span>Hola, {usuario.name}</span>}
+                        {' . '}
+                        <button type="button" onClick={onSalir}>Salir</button>
+                    </>
                 ) : (
                     <Link to="/login">Entrar</Link>
                 )}

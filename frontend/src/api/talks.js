@@ -86,3 +86,31 @@ export async function iniciarSesion(email, password) {
   }
   throw new Error(cuerpo.message ?? `Error ${respuesta.status} al iniciar sesión.`);
 }
+
+// GET /api/user → quién es el usuario del token: {"id", "name", "email", "role"}.
+// Si la sesión no es válida, el error lleva status 401 para que la aplicación la cierre.
+export async function getUsuario(token) {
+  const respuesta = await fetch(`${BASE_URL}/user`, {
+    headers: { Accept: 'application/json', Authorization: `Bearer ${token}` },
+  });
+  if (!respuesta.ok) {
+    const error = new Error(`Error ${respuesta.status} al cargar el usuario`);
+    error.status = respuesta.status;
+    throw error;
+  }
+  return respuesta.json();
+}
+
+// POST /api/logout → invalida el token en el servidor.
+// Si no hay conexión, no pasa nada: la sesión se cierra igualmente en el navegador.
+export async function cerrarSesionApi(token) {
+  if (!token) return;
+  try {
+    await fetch(`${BASE_URL}/logout`, {
+      method: 'POST',
+      headers: { Accept: 'application/json', Authorization: `Bearer ${token}` },
+    });
+  } catch {
+    // Sin conexión: el token caducará solo en el servidor
+  }
+}
