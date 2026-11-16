@@ -71,6 +71,14 @@ class DatabaseSeeder extends Seeder
             ]
         );
         User::firstOrCreate(
+            ['email' => 'carla@sabitech.test'],
+            [
+                'name' => 'Carla Asistente',
+                'password' => 'password',
+                'role_id' => $attendeeRole->id,
+            ]
+        );
+        User::firstOrCreate(
             ['email' => 'organizacion@sabitech.test'],
             [
                 'name' => 'Oscar Organizador',
