@@ -2,7 +2,7 @@
 // Pregunta de la pantalla: "¿En qué charla me queda sitio?". Todo sale de GET /api/talks.
 import { useState, ViewTransition } from 'react';
 import { Link, useNavigate } from 'react-router';
-import { reservarPlaza } from '../api/talks.js';
+import { getCharlas, reservarPlaza } from '../api/talks.js';
 import { Avatar, BarraPlazas, PildoraPlazas } from '../components/Piezas.jsx';
 import { capital, dia, enumerar, hora, plazas } from '../utils/formato.js';
 
@@ -143,11 +143,12 @@ function CatalogPage({ charlas, setCharlas, cargando, error, token, reservas, re
   const visibles = charlas.filter(FILTROS.find((f) => f.id === filtro).cumple);
 
   // Tras reservar: baja una plaza en la fila y se recargan las reservas (para tener la referencia)
-  async function alReservar(id, descontar) {
-    if (descontar) {
-      setCharlas((lista) => lista.map((c) => (c.id === id ? { ...c, available_seats: Math.max(0, c.available_seats - 1) } : c)));
-    }
-    await recargarReservas().catch(() => {});
+  async function alReservar(){
+    const [datos] = await Promise.all([
+      getCharlas().catch(() => null),
+      recargarReservas().catch(() => {}),
+    ]);
+    if(datos) setCharlas(datos);
   }
 
   // Lo que más importa hoy, en una línea

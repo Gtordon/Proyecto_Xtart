@@ -34,13 +34,13 @@ function TalkPage({ token, reservas, recargarReservas, onSesionInvalida }) {
     setEnviando(true);
     try {
       await reservarPlaza(charla.id, token);
-      setCharla((c) => ({ ...c, available_seats: Math.max(0, c.available_seats - 1) }));
+      getCharla(charla.id).then(setCharla).catch(() => {});
       setRecienReservada(true);
       setResultado({ tipo: 'ok', texto: 'Plaza confirmada. Tu entrada ya está en Mis reservas.' });
       recargarReservas().catch(() => {});
     } catch (e) {
       if (e.code === 'unauthenticated') onSesionInvalida();
-      if (e.code === 'talk_full') setCharla((c) => ({ ...c, available_seats: 0 }));
+      if (e.code === 'talk_full') getCharla(charla.id).then(setCharla).catch(() => {});
       if (e.code === 'already_reserved') recargarReservas().catch(() => {});
       setResultado({ tipo: 'error', texto: e.message });
     } finally {
