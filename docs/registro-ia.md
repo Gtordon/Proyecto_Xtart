@@ -205,3 +205,160 @@ Este inventario recoge el trabajo que hice yo, Joan, con las herramientas indica
 | 17/11/2026 | Codex | API, modelo de datos y README | Contrastar la documentación con el código y las migraciones y corregir las discrepancias | Acepté las correcciones de la documentación | Comparación con las rutas, el frontend y las migraciones | Joan |
 | Fecha pendiente | ChatGPT | Revisión general | Pedí una segunda comprobación del proyecto | Contrasté respuestas de Claude | Pendiente de concretar | Joan |
 | 17/11/2026 | ChatGPT | Registro de IA, README y demás archivos revisados | Pasar el borrador del registro a Markdown y revisar el README y los demás archivos | Usé la ayuda para convertir el registro y revisar la documentación del proyecto | Comparé el registro con el borrador y la documentación con los archivos del proyecto | Joan |
+
+Registro de uso de IA · SABITECH WEB · Guillermo
+ 
+## 1. Herramientas
+ 
+| Herramienta | Tipo de ayuda | Apartados afectados | Quién lo ha hecho |
+|---|---|---|---|
+| Claude (chat) | Explicaciones del enunciado y de Git, propuestas de código, revisión y redacción | Servidor (seeder), Interfaces (frontend y estilos), Intermodular (memoria) | Guillermo |
+| Claude con acceso a la carpeta del proyecto | Revisar el código en local, proponer cambios y sacar capturas de las pruebas | Interfaces y pruebas | Guillermo |
+ 
+SABITECH WEB no lleva ninguna función de IA dentro: la IA solo ha sido una herramienta de trabajo. Los prompts reales son copia de las conversaciones; solo he corregido faltas de tecleo. En cada caso añado una «Versión mejorada por la IA»: le pedí a Claude que reescribiera mis prompts para compararlos con los míos. No son los que usé en su momento; la comparación está en el apartado 4.
+ 
+## 2. Casos de uso representativos
+ 
+Estos siete casos son de mi parte (Guillermo). Cuando algo lo decidió o lo revisó otro compañero, lo indico.
+ 
+### Caso 1. Cómo organizarnos con las ramas
+ 
+**Quién lo ha hecho.** Guillermo.
+ 
+**Fecha y herramienta.** 09/11/2026 · Claude (chat)
+ 
+**Contexto.** Al empezar a programar no sabía cuántas ramas abrir ni cómo dejar `main`.
+ 
+**Prompt real.** «Somos tres en un repo de GitHub. Según el enunciado adjunto, ¿exige alguna forma de trabajar con ramas? Si no la exige, propón un flujo sencillo (ramas, Pull Requests y revisión) y dime qué parte es obligatoria y qué parte es decisión nuestra.»
+ 
+**Qué propuso la IA.** Una rama por tarea, que nada entre en `main` sin un Pull Request revisado por otro, y reorganizar las ramas antiguas.
+ 
+**Qué hicimos.** Me quedé con lo de una rama por tarea y PR revisado. Lo de reorganizar las ramas viejas no lo hice.
+ 
+**Por qué.** Reorganizar ramas que ya tenían trabajo podía hacernos perder cambios y no aportaba nada.
+ 
+**Cómo se comprobó.** Todos mis cambios han entrado en `main` por PR revisados por Joan o Alberto.
+ 
+### Caso 2. Los datos de prueba del seeder
+ 
+**Quién lo ha hecho.** Guillermo.
+ 
+**Fecha y herramienta.** 09/11/2026 · Claude (chat)
+ 
+**Contexto.** Me tocaba el seeder: usuarios con sus roles, charlas y reservas para poder probar la web.
+ 
+**Prompt real.** «Escribe un seeder de Laravel para estas tablas (roles, users, speakers, talks, reservations): 3 roles, 5 usuarios con contraseña de prueba y 3 charlas con 100, 1 y 0 plazas libres. Que se pueda ejecutar varias veces sin duplicar datos y explícame cada bloque.»
+ 
+**Qué propuso la IA.** La estructura del seeder con roles, ponentes, usuarios, charlas y reservas.
+ 
+**Qué hicimos.** Cambié nombres y datos. Al ejecutarlo salieron dos fallos y los corregí: una errata en un método y una charla «completa» con más reservas que plazas. Después lo hice repetible con `firstOrCreate` para poder lanzarlo varias veces.
+ 
+**Por qué.** Necesitábamos tres casos claros para probar: charla con sitio, con una sola plaza y llena.
+ 
+**Cómo se comprobó.** `php artisan migrate:fresh --seed`, `db:seed` dos veces seguidas sin error y `GET /api/talks` devolviendo 100, 1 y 0 plazas libres.
+ 
+### Caso 3. Qué pide Diseño de Interfaces
+ 
+**Quién lo ha hecho.** Guillermo.
+ 
+**Fecha y herramienta.** 13/11/2026 · Claude (chat)
+ 
+**Contexto.** Iba a ponerme con los estilos y no tenía claro qué pedía exactamente el módulo.
+ 
+**Prompt real.** «A partir del apartado de Diseño de Interfaces Web del enunciado adjunto, hazme una lista de comprobación de lo que tiene que cumplir el frontend (responsive, accesibilidad, guía de estilo), ordenada por prioridad para el checkpoint del 18/11.»
+ 
+**Qué propuso la IA.** Una lista de lo que pide el enunciado (responsive, accesibilidad, guía de estilo, coherencia visual) y por dónde empezar.
+ 
+**Qué hicimos.** La usé como lista de control. Al mirarlo vimos que el CSS seguía siendo la plantilla de Vite, así que los estilos había que hacerlos casi desde cero.
+ 
+**Por qué.** Prefería saber primero qué se iba a evaluar antes de tocar código.
+ 
+**Cómo se comprobó.** Contrastando la lista con el enunciado y con el código que había en el repo.
+ 
+### Caso 4. El rediseño con Umbral Labs: lo que no acepté
+ 
+**Quién lo ha hecho.** Guillermo.
+ 
+**Fecha y herramienta.** 16/11/2026 · Claude (chat)
+ 
+**Contexto.** Quería que la web llevara la identidad de nuestra empresa ficticia, Umbral Labs. Le pasé la imagen del logo.
+ 
+**Prompt real.** «Adjunto el logo de Umbral Labs, nuestra empresa ficticia. Propón una paleta para la web basada en sus colores, comprueba el contraste para accesibilidad y dime si el enunciado permite poner nuestra marca en la web de SABITECH y dónde.»
+ 
+**Qué propuso la IA.** Avisó de que cambiar el nombre de la web chocaba con el enunciado, que separa la marca de la empresa de la de SABITECH, y propuso usar Umbral Labs solo como firma.
+ 
+**Qué hicimos.** No cambié el nombre. Me quedé con la paleta azul de Umbral Labs y el logo como firma en el login y en Mis reservas.
+ 
+**Por qué.** La web es de SABITECH; nosotros somos la empresa que la hace.
+ 
+**Cómo se comprobó.** Capturas en móvil y escritorio, contraste de los colores y PR revisado por Joan.
+ 
+### Caso 5. Pasar el diseño al frontend sin el «modo de ejemplo»
+ 
+**Quién lo ha hecho.** Guillermo, con la revisión de Alberto.
+ 
+**Fecha y herramienta.** 16/11/2026 · Claude (con acceso a la carpeta del proyecto)
+ 
+**Contexto.** Teníamos una propuesta de diseño en una carpeta aparte (`demo`) y había que llevarla al frontend real.
+ 
+**Prompt real.** «Pasa el diseño de la carpeta demo al frontend del proyecto conectándolo a la API real. Avísame de cualquier parte de la demo que no deba ir a la web final, por ejemplo datos de ejemplo o accesos sin servidor.»
+ 
+**Qué propuso la IA.** Pasar las pantallas y estilos al frontend. La demo traía un modo de prueba que, con el servidor apagado, dejaba entrar con cualquier correo.
+ 
+**Qué hicimos.** Aplicamos el diseño y quitamos ese modo de prueba. Alberto pidió probarlo con el backend encendido antes de unirlo.
+ 
+**Por qué.** En la web real dejar entrar con cualquier correo sería un fallo de seguridad.
+ 
+**Cómo se comprobó.** Recorrido completo con el backend real: entrar, reservar, ver Mis reservas y salir.
+ 
+### Caso 6. Los avisos de la auditoría: los arreglé yo
+ 
+**Quién lo ha hecho.** Guillermo. La auditoría la había preparado Joan.
+ 
+**Fecha y herramienta.** 17/11/2026 · Claude (chat)
+ 
+**Contexto.** La auditoría del checkpoint marcaba tres cosas del frontend: faltaba el proxy de Vite, las plazas no se recargaban tras reservar y un comentario hablaba de Sanctum cuando usamos token propio.
+ 
+**Prompt real.** «Para cada aviso de la auditoría que afecta al frontend, dime el archivo, la línea y el cambio, y explícame por qué falla. Los cambios los hago yo a mano.»
+ 
+**Qué propuso la IA.** El archivo y la línea de cada cambio con el código a poner.
+ 
+**Qué hicimos.** Hice los cambios a mano, archivo por archivo, y repetí las pruebas.
+ 
+**Por qué.** Quería saber qué tocaba cada cambio para poder explicarlo en la defensa.
+ 
+**Cómo se comprobó.** Las 9 pruebas del recorrido en el navegador correctas y `npm run build` sin errores.
+ 
+### Caso 7. Una memoria menos acartonada
+ 
+**Quién lo ha hecho.** Guillermo.
+ 
+**Fecha y herramienta.** 17/11/2026 · Claude (chat)
+ 
+**Contexto.** Primer borrador de la memoria y de mis documentos (`pruebas.md`, `permisos.md`, `digitalizacion.md`).
+ 
+**Prompt real.** «Reescribe este texto con un tono natural, como lo explicaría un estudiante de 2º de DAW. No cambies ningún dato técnico y señálame cualquier frase que no coincida con lo que hace la web.»
+ 
+**Qué propuso la IA.** Una segunda versión con un tono más natural.
+ 
+**Qué hicimos.** Me quedé con la segunda y la revisé frase a frase para que dijera lo que de verdad hace la web.
+ 
+**Por qué.** La primera sonaba a texto de manual y no a algo escrito por nosotros.
+ 
+**Cómo se comprobó.** Comparando lo escrito con el código del repo y con mis pruebas del 17/11. La revisamos en equipo antes de entregar.
+ 
+## 3. Inventario de usos
+ 
+| Fecha | Herramienta | Apartado | Petición | Resultado | Comprobación | Quién lo ha hecho |
+|---|---|---|---|---|---|---|
+| 09/11/2026 | Claude | Organización con Git | Cómo trabajar con ramas y `main` | Rama por tarea y PR revisado; no reorganicé las ramas viejas | PR revisados en el repo | Guillermo |
+| 09/11/2026 | Claude | Seeder | Escribir los datos de prueba | Adapté datos y corregí dos fallos | `migrate:fresh --seed` y `GET /api/talks` | Guillermo |
+| 10/11/2026 | Claude | Seeder | Arreglar el error al relanzarlo | Pasé todo a `firstOrCreate` | `db:seed` dos veces sin error | Guillermo |
+| 12/11/2026 | Claude | Router, páginas y login | Montar el frontend con los pasos del enunciado | Usé el código; corregí yo los errores de tecleo que dejaban la pantalla en blanco | `npm run dev`; PR #29 y #30 revisados por Joan | Guillermo |
+| 13/11/2026 | Claude | Diseño de Interfaces | Qué pide el módulo para los estilos | Lista de control; vimos que el CSS era aún el de Vite | Contraste con el enunciado | Guillermo |
+| 15/11/2026 | Claude | Primera versión del diseño | Diseño limpio y fluido | Se descartó al pasar a la propuesta de rediseño | Capturas en móvil y escritorio | Guillermo |
+| 16/11/2026 | Claude | Paso de la demo al frontend | Aplicar el diseño en el proyecto | Aceptado sin el modo de ejemplo | Recorrido con el backend real; revisión de Alberto en el PR #34 | Guillermo |
+| 16/11/2026 | Claude | Identidad Umbral Labs | Colores, logo y nombre | Colores y firma sí; nombre no | Capturas y PR #37 revisado por Joan | Guillermo |
+| 17/11/2026 | Claude | Auditoría del frontend | Dónde arreglar cada aviso | Cambios hechos por mí en 4 archivos | 9 pruebas manuales y `npm run build` | Guillermo |
+| 17/11/2026 | Claude con acceso al proyecto | Capturas de las pruebas | Sacar las capturas del recorrido para la memoria | 12 capturas en `docs/capturas_pruebas/` | Revisadas una a una contra la web | Guillermo |
+| 17/11/2026 | Claude | Documentación y memoria | Redactar `pruebas.md`, `permisos.md`, `digitalizacion.md` y la memoria | Pedí un tono más natural y revisé el contenido | Comparado con el código y las pruebas | Guillermo |
