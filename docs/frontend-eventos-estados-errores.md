@@ -8,7 +8,7 @@
 | Evento | Dónde ocurre | Qué hace el frontend | Llamada a la API |
 |---|---|---|---|
 | Enviar el formulario de entrada | `LoginPage` | Valida en el navegador (el correo debe tener @ y la contraseña no puede estar vacía). Si es correcto, guarda el token y vuelve a la pantalla de la que venía | `POST /api/login` |
-| Pulsar «Reservar» en una fila del programa | `CatalogPage` | Sin sesión, lleva al login y vuelve después. Con sesión, reserva; si sale bien, baja una plaza en pantalla y recarga las reservas | `POST /api/talks/{id}/reservations` |
+| Pulsar «Reservar» en una fila del programa | `CatalogPage` | Sin sesión, lleva al login y vuelve después. Con sesión, reserva; si sale bien, vuelve a pedir las charlas al servidor y recarga las reservas | `POST /api/talks/{id}/reservations` |
 | Pulsar «Reservar plaza» en el detalle | `TalkPage` | Igual que en el programa; además muestra un mensaje de confirmación y cambia el botón por «Ver mi entrada» | `POST /api/talks/{id}/reservations` |
 | Pulsar «Ver entrada» | `MyReservationsPage` | Abre un diálogo con la referencia y una vista previa del QR | — |
 | Pulsar «Salir» | Navegación lateral | Invalida el token en el servidor y después lo borra del navegador | `POST /api/logout` |
@@ -61,8 +61,8 @@
 | Reservar sin sesión | Código `unauthenticated` (401) | Cierra la sesión local | «No has iniciado sesión o tu sesión ha caducado. Vuelve a entrar.» |
 | Reservar sin ser asistente | Código `forbidden_role` (403) | Muestra el mensaje | «Solo los asistentes pueden reservar charlas.» |
 | Reservar una charla ya reservada | Código `already_reserved` (409) | Recarga las reservas y muestra el mensaje | «Ya tienes una reserva en esta charla.» |
-| Reservar una charla sin plazas | Código `talk_full` (409) | Pone las plazas libres a cero en pantalla | «No quedan plazas libres en esta charla.» |
-| Reservar una charla que ya empezó | Código `talk_started` (422) | Muestra el mensaje | «Esta charla ya ha empezado.» |
+| Reservar una charla sin plazas | Código `talk_full` (409) | Vuelve a pedir la charla al servidor para mostrar las plazas reales | «No quedan plazas libres en esta charla.» |
+| Reservar una charla que ya empezó | Código `talk_started` (409) | Muestra el mensaje | «Esta charla ya ha empezado.» |
 | La charla no existe | Respuesta 404 | Muestra el mensaje | «No se ha encontrado la charla.» |
 | Otro error al reservar | Cualquier otro código | Muestra el número de error | «Error N al reservar.» |
 | Sesión caducada al pedir el usuario o las reservas | Respuesta 401 | Cierra la sesión local | — (el usuario vuelve a ver «Entrar») |
