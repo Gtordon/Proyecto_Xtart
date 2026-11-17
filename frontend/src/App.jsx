@@ -155,7 +155,7 @@ function App() {
         }
       })
       .catch(() => {
-        if (!cancelado) setError('No se pudo conectar con el servidor. ¿Está encendido el backend?');
+        if (!cancelado) setError('A ocurrido un error. No se pudo conectar con el servidor.');
       })
       .finally(() => {
         if (!cancelado) setCargando(false);
