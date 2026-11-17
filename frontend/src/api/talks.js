@@ -1,5 +1,5 @@
-// Llamadas al backend de SABITECH (Laravel). Todas las peticiones pasan por aquí.
-const BASE_URL = 'http://127.0.0.1:8000/api';
+//Ruta relativa: en desarrollo, vite la reenvia al backend
+const BASE_URL = '/api';
 
 // GET /api/talks → lista de charlas
 export async function getCharlas() {
