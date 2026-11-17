@@ -26,12 +26,15 @@ export function Icono({ nombre, tamano = 16 }) {
   );
 }
 
-// ---- Marca: una entrada con su perforado, en el color de la marca ----
-export function Marca() {
+// ---- Marca Umbral Labs: un arco con la puerta entreabierta y la luz que sale al suelo ----
+// Los colores vienen de CSS (--arco y --puerta) para que el símbolo sirva en fondo claro y en marino
+export function Marca({ tamano = 28 }) {
   return (
-    <svg className="marca__simbolo" width="28" height="28" viewBox="0 0 28 28" aria-hidden="true">
-      <path fill="var(--accent)" d="M5 5h18a2 2 0 0 1 2 2v4a3 3 0 0 0 0 6v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4a3 3 0 0 0 0-6V7a2 2 0 0 1 2-2z" />
-      <path stroke="var(--surface)" strokeWidth="2" strokeLinecap="round" strokeDasharray="0.1 4" d="M18 8.5v11" />
+    <svg className="marca__simbolo" width={tamano} height={tamano} viewBox="0 0 28 28" aria-hidden="true">
+      <path fill="var(--puerta)" opacity="0.3" d="M8 22h12l-4 4.5H3.5z" />
+      <path fill="var(--arco)" d="M3 22V12.5a11 11 0 0 1 22 0V22h-5v-9a6 6 0 0 0-12 0v9z" />
+      <path fill="var(--puerta)" d="M12.5 12.8 19 11v11h-6.5z" />
+      <circle cx="14.2" cy="17" r="0.9" fill="#fff" />
     </svg>
   );
 }

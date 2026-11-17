@@ -58,6 +58,9 @@ function Navegacion({ token, usuario, onSalir, onNavegar }) {
             <Icono nombre="entrar" />Entrar
           </Link>
         )}
+        <p className="creditos">
+          Desarrollado por <span className="creditos__empresa">Umbral <span className="creditos__labs">Labs</span></span>
+        </p>
       </div>
     </>
   );
