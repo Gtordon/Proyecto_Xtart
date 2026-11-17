@@ -35,7 +35,7 @@ export class ErrorReserva extends Error {
 }
 
 // POST /api/talks/{id}/reservations → reservar una plaza.
-// Autenticación por token de Sanctum (Authorization: Bearer), como fija el contrato de la API.
+// Autenticación con el token propio de la API (Authorization: Bearer), como fija el contrato. El servidor lo genera en User::issueToken().
 // Sin cuerpo: el servidor saca el usuario del token.
 // 201 → {"id", "talk_id", "status"}. Errores → {"message", "code"}.
 export async function reservarPlaza(id, token) {
