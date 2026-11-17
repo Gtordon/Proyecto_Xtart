@@ -1,5 +1,5 @@
-// Llamadas al backend de SABITECH (Laravel). Todas las peticiones pasan por aquí.
-const BASE_URL = 'http://127.0.0.1:8000/api';
+//Ruta relativa: en desarrollo, vite la reenvia al backend
+const BASE_URL = '/api';
 
 // GET /api/talks → lista de charlas
 export async function getCharlas() {
@@ -35,7 +35,7 @@ export class ErrorReserva extends Error {
 }
 
 // POST /api/talks/{id}/reservations → reservar una plaza.
-// Autenticación por token de Sanctum (Authorization: Bearer), como fija el contrato de la API.
+// Autenticación por token propio del backend (guardado con hash y caduca a las 8 horas) enviado como autorizacion: Bearer.
 // Sin cuerpo: el servidor saca el usuario del token.
 // 201 → {"id", "talk_id", "status"}. Errores → {"message", "code"}.
 export async function reservarPlaza(id, token) {
