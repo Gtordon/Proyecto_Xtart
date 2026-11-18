@@ -21,7 +21,7 @@ function FilaCharla({ charla, reserva, token, onReservada, onSesionInvalida, ord
 
   async function reservar() {
     if (!token) {
-      navigate('/login', { state: { volver: '/' } });
+      navigate('/login', { state: { volver: '/programa' } });
       return;
     }
     setError('');

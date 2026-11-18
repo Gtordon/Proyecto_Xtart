@@ -57,7 +57,7 @@ function MyReservationsPage({ token, reservas, recargarReservas }) {
         <div className="tarjeta vacio">
           <p className="vacio__titulo">Todavía no tienes plazas reservadas</p>
           <p className="nota">Elige una charla del programa y pulsa Reservar.</p>
-          <Link to="/" className="boton boton--primario">Ver el programa</Link>
+          <Link to="/programa" className="boton boton--primario">Ver el programa</Link>
         </div>
       )}
 

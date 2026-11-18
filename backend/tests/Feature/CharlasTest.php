@@ -19,9 +19,9 @@ class CharlasTest extends TestCase
 
         $charlas = collect($response->json())->keyBy('title');
 
-        $this->assertSame(100, $charlas['Introduccion a la IA Generativa']['available_seats']);
+        $this->assertSame(100, $charlas['Introducción a la IA generativa']['available_seats']);
         $this->assertSame(1, $charlas['Ciberseguridad en aplicaciones web']['available_seats']);
-        $this->assertSame(0, $charlas['Desarrollo de aplicaciones moviles']['available_seats']);
+        $this->assertSame(0, $charlas['Desarrollo de aplicaciones móviles']['available_seats']);
     }
 
     public function test_detalle_de_charla_existente(): void
@@ -43,7 +43,7 @@ class CharlasTest extends TestCase
     public function test_la_hora_se_envia_en_hora_de_madrid(): void
     {
         $charla = collect($this->getJson('/api/talks')->json())
-            ->firstWhere('title', 'Introduccion a la IA Generativa');
+            ->firstWhere('title', 'Introducción a la IA generativa');
 
         $inicio = \Carbon\Carbon::parse($charla['starts_at'])->setTimezone('Europe/Madrid');
 

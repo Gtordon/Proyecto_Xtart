@@ -9,11 +9,20 @@ import CatalogPage from './pages/CatalogPage.jsx';
 import TalkPage from './pages/TalkPage.jsx';
 import LoginPage from './pages/LoginPage.jsx';
 import MyReservationsPage from './pages/MyReservationsPage.jsx';
+import HomePage from './pages/HomePage.jsx';
+import SpeakersPage from './pages/SpeakersPage.jsx';
+import InfoPage from './pages/InfoPage.jsx';
+import LegalPage from './pages/LegalPage.jsx';
 
 // Clave donde se guarda el token en el navegador
 const CLAVE_TOKEN = 'sabitech_token';
 
-const TITULOS = { '/': 'Programa', '/mis-reservas': 'Mis reservas', '/login': 'Entrar' };
+const TITULOS = {
+  '/': 'Inicio', '/programa': 'Programa', '/ponentes': 'Ponentes', '/informacion': 'Información',
+  '/mis-reservas': 'Mis reservas', '/login': 'Entrar', '/legal': 'Aviso legal',
+};
+// Pantallas que muestran datos de las charlas: al entrar en ellas se piden otra vez
+const CON_CHARLAS = ['/', '/programa', '/ponentes', '/informacion'];
 const ROLES = { attendee: 'Asistente', organizer: 'Organización', access_staff: 'Personal de acceso' };
 
 function leerToken() {
@@ -37,7 +46,11 @@ function Navegacion({ token, usuario, onSalir, onNavegar }) {
 
       <nav className="nav" aria-label="Principal">
         <p className="nav__grupo">Jornadas</p>
-        <NavLink to="/" end className="nav__enlace" onClick={onNavegar}><Icono nombre="programa" />Programa</NavLink>
+        <NavLink to="/" end className="nav__enlace" onClick={onNavegar}><Icono nombre="inicio" />Inicio</NavLink>
+        <NavLink to="/programa" className="nav__enlace" onClick={onNavegar}><Icono nombre="programa" />Programa</NavLink>
+        <NavLink to="/ponentes" className="nav__enlace" onClick={onNavegar}><Icono nombre="ponentes" />Ponentes</NavLink>
+        <NavLink to="/informacion" className="nav__enlace" onClick={onNavegar}><Icono nombre="info" />Información</NavLink>
+        <p className="nav__grupo">Tu cuenta</p>
         <NavLink to="/mis-reservas" className="nav__enlace" onClick={onNavegar}><Icono nombre="entrada" />Mis reservas</NavLink>
       </nav>
 
@@ -63,6 +76,48 @@ function Navegacion({ token, usuario, onSalir, onNavegar }) {
         </p>
       </div>
     </>
+  );
+}
+
+// Pie de página común: enlaces de las jornadas, de la cuenta y legales, y el crédito de Umbral Labs
+function Pie({ token }) {
+  return (
+    <footer className="pie">
+      <div className="pie__columnas">
+        <div className="pie__marca">
+          <p className="pie__nombre">SABITECH</p>
+          <p>Jornadas tecnológicas con reserva de plaza en la web.</p>
+          <div className="pie__redes">
+            <a href="https://www.instagram.com/" target="_blank" rel="noreferrer" aria-label="Instagram (abre en otra pestaña)">
+              <Icono nombre="instagram" tamano={18} />
+            </a>
+            <a href="https://www.facebook.com/" target="_blank" rel="noreferrer" aria-label="Facebook (abre en otra pestaña)">
+              <Icono nombre="facebook" tamano={18} />
+            </a>
+          </div>
+        </div>
+        <nav aria-label="Jornadas">
+          <p className="pie__grupo">Jornadas</p>
+          <Link to="/programa">Programa</Link>
+          <Link to="/ponentes">Ponentes</Link>
+          <Link to="/informacion">Información</Link>
+        </nav>
+        <nav aria-label="Tu cuenta">
+          <p className="pie__grupo">Tu cuenta</p>
+          {token ? <Link to="/mis-reservas">Mis reservas</Link> : <Link to="/login">Entrar</Link>}
+          <Link to="/informacion">Contacto</Link>
+        </nav>
+        <nav aria-label="Legal">
+          <p className="pie__grupo">Legal</p>
+          <Link to="/legal#aviso-legal">Aviso legal</Link>
+          <Link to="/legal#privacidad">Privacidad</Link>
+          <Link to="/legal#cookies">Cookies</Link>
+        </nav>
+      </div>
+      <p className="pie__final">
+        © 2026 SABITECH · Desarrollado por <span className="creditos__empresa">Umbral <span className="creditos__labs">Labs</span></span>
+      </p>
+    </footer>
   );
 }
 
@@ -141,9 +196,9 @@ function App() {
       });
   }, [token, guardarSesion]);
 
-  // Cada vez que se entra en el programa, pedimos charlas y reservas otra vez:
+  // Cada vez que se entra en una pantalla con charlas, pedimos charlas y reservas otra vez:
   // así las plazas libres están al día después de reservar, sin recargar la página.
-  const enPrograma = location.pathname === '/';
+  const enPrograma = CON_CHARLAS.includes(location.pathname);
   useEffect(() => {
     if (!enPrograma) return undefined;
     let cancelado = false;
@@ -162,12 +217,15 @@ function App() {
       });
     recargarReservas().catch(() => {});
     return () => { cancelado = true; };
-  }, [enPrograma, recargarReservas]);
+  }, [enPrograma, location.pathname, recargarReservas]);
 
-  // Cada pantalla empieza arriba
+  // Cada pantalla empieza arriba, salvo que la URL lleve ancla (/legal#privacidad):
+  // entonces se baja hasta ese apartado. Es el único sitio que controla el scroll.
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [location.pathname]);
+    const destino = location.hash && document.getElementById(location.hash.slice(1));
+    if (destino) destino.scrollIntoView();
+    else window.scrollTo(0, 0);
+  }, [location.pathname, location.hash]);
 
   const contexto = { token, reservas, recargarReservas, onSesionInvalida: sesionInvalida };
   const tituloMovil = TITULOS[location.pathname] ?? 'Charla';
@@ -197,8 +255,12 @@ function App() {
         <ViewTransition key={location.pathname} default="vt-pantalla">
           <div className="pantalla">
             <Routes location={location}>
+              <Route path="/" element={<HomePage charlas={charlas} cargando={cargando} error={error} token={token} />} />
+              <Route path="/ponentes" element={<SpeakersPage charlas={charlas} cargando={cargando} error={error} />} />
+              <Route path="/informacion" element={<InfoPage charlas={charlas} />} />
+              <Route path="/legal" element={<LegalPage />} />
               <Route
-                path="/"
+                path="/programa"
                 element={<CatalogPage charlas={charlas} setCharlas={setCharlas} cargando={cargando} error={error} {...contexto} />}
               />
               <Route path="/charlas/:id" element={<TalkPage {...contexto} />} />
@@ -207,6 +269,7 @@ function App() {
             </Routes>
           </div>
         </ViewTransition>
+        <Pie token={token} />
       </main>
     </div>
   );

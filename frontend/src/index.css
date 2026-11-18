@@ -1415,3 +1415,464 @@ a {
     opacity: 0;
   }
 }
+
+/* ===================================================================
+   Apartados de la web: Inicio, Ponentes, Información, Legal y pie.
+   Usan las mismas variables que el resto: marino para la portada,
+   azul solo en lo pequeño y tarjetas blancas con borde de 1 px.
+   =================================================================== */
+
+/* Portada del inicio: el bloque marino, como la barra lateral */
+.portada {
+  display: grid;
+  gap: 14px;
+  padding: 28px 20px;
+  color: var(--on-navy);
+  background: var(--navy);
+  border-radius: var(--radius-card);
+}
+
+.portada__antetitulo {
+  font-size: var(--fs-small);
+  font-weight: 500;
+  color: var(--on-navy-accent);
+}
+
+.portada__titulo {
+  max-width: 18ch;
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+.portada__texto {
+  max-width: 56ch;
+  color: var(--on-navy-muted);
+}
+
+.portada__acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.portada :focus-visible {
+  outline-color: var(--on-navy-accent);
+}
+
+/* Botón claro: el secundario sobre fondo marino */
+.boton--claro {
+  color: var(--on-navy);
+  background: transparent;
+  border-color: rgb(255 255 255 / 0.4);
+}
+
+.portada__cifras {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin: 10px 0 0;
+  padding-top: 18px;
+  border-top: 1px solid rgb(255 255 255 / 0.12);
+}
+
+.portada__cifras dt {
+  font-size: var(--fs-small);
+  color: var(--on-navy-muted);
+}
+
+.portada__cifras dd {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+/* Secciones con título */
+.seccion {
+  display: grid;
+  gap: 14px;
+}
+
+.seccion__cabecera {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.seccion__titulo {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.seccion--dos {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.enlace-flecha {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-weight: 500;
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.rejilla {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Bloque de texto dentro de una tarjeta */
+.bloque {
+  display: grid;
+  align-content: start;
+  gap: 10px;
+  padding: var(--pad);
+}
+
+.bloque__icono {
+  display: inline-grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  color: var(--accent);
+  background: var(--accent-soft);
+  border-radius: var(--radius-control);
+}
+
+.bloque__titulo {
+  margin: 0;
+  font-size: var(--fs-section);
+  font-weight: 600;
+}
+
+.bloque__texto {
+  color: var(--muted);
+}
+
+/* Tarjeta de charla del inicio: toda la tarjeta es un enlace */
+.charla-tarjeta {
+  display: grid;
+  gap: 8px;
+  height: 100%;
+  padding: var(--pad);
+  color: var(--text);
+  text-decoration: none;
+  transition: border-color var(--t-estado) ease;
+}
+
+.charla-tarjeta__hora {
+  font-size: var(--fs-small);
+  color: var(--muted);
+}
+
+.charla-tarjeta__titulo {
+  font-size: var(--fs-section);
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.charla-tarjeta__ponente {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--muted);
+}
+
+.charla-tarjeta .pildora {
+  justify-self: start;
+  margin-top: 4px;
+}
+
+/* Fila de ponentes del inicio */
+.ponentes-fila {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ponentes-fila__item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px 10px 10px;
+  font-weight: 500;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+}
+
+/* Preguntas frecuentes con <details>: se abren con teclado y sin JavaScript */
+.faq {
+  display: grid;
+}
+
+.faq__item {
+  border-bottom: 1px solid var(--rule);
+}
+
+.faq__item summary {
+  padding: 10px 0;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.faq__item p {
+  padding-bottom: 12px;
+  color: var(--muted);
+}
+
+/* Llamada final */
+.aviso-final {
+  display: grid;
+  gap: 14px;
+  align-items: center;
+  padding: var(--pad);
+  background: var(--accent-soft);
+  border-radius: var(--radius-card);
+}
+
+.aviso-final__titulo {
+  margin: 0 0 4px;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--accent-ink);
+}
+
+.aviso-final p {
+  color: var(--accent-ink);
+}
+
+/* Página de ponentes */
+.ponente-tarjeta {
+  display: grid;
+  align-content: start;
+  justify-items: start;
+  gap: 10px;
+  padding: var(--pad);
+}
+
+.ponente-tarjeta__nombre {
+  margin: 0;
+  font-size: var(--fs-section);
+  font-weight: 600;
+}
+
+.ponente-tarjeta__charlas {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ponente-tarjeta__charlas li {
+  display: grid;
+}
+
+.ponente-tarjeta__charla {
+  font-weight: 500;
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.ponente-tarjeta__cuando {
+  font-size: var(--fs-small);
+  color: var(--muted);
+}
+
+/* Páginas de texto (legal) */
+.pagina--texto {
+  max-width: 760px;
+}
+
+.lista-texto {
+  display: grid;
+  gap: 4px;
+  margin: 0;
+  padding-left: 20px;
+  color: var(--muted);
+}
+
+/* Pie de página */
+.pie {
+  max-width: 1080px;
+  margin: 48px auto 0;
+  padding-top: 24px;
+  font-size: var(--fs-small);
+  color: var(--muted);
+  border-top: 1px solid var(--border);
+}
+
+.pie__columnas {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px 16px;
+}
+
+.pie__marca {
+  grid-column: 1 / -1;
+}
+
+.pie__nombre {
+  margin-bottom: 4px;
+  font-size: var(--fs-body);
+  font-weight: 700;
+  color: var(--text);
+}
+
+.pie nav {
+  display: grid;
+  align-content: start;
+  gap: 6px;
+}
+
+.pie__grupo {
+  font-weight: 600;
+  color: var(--text);
+}
+
+.pie a {
+  color: var(--muted);
+  text-decoration: none;
+}
+
+.pie__final {
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid var(--rule);
+}
+
+/* Mapa de "Cuándo y dónde" */
+.mapa {
+  display: block;
+  width: 100%;
+  height: 220px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-control);
+}
+
+/* Redes sociales del pie */
+.pie__redes {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.pie__redes a {
+  display: inline-grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 50%;
+}
+
+/* Preguntas frecuentes: flecha propia en lugar del triángulo del navegador */
+.faq__item summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  list-style: none;
+}
+
+.faq__item summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq__item summary::after {
+  content: '';
+  flex: none;
+  width: 7px;
+  height: 7px;
+  border-right: 1.5px solid var(--muted);
+  border-bottom: 1.5px solid var(--muted);
+  transform: rotate(45deg) translateY(-2px);
+  transition: transform var(--t-estado) ease;
+}
+
+.faq__item[open] summary::after {
+  transform: rotate(-135deg) translateY(-2px);
+}
+
+/* Móvil: los dos botones de la portada, del mismo ancho */
+.portada__acciones .boton {
+  flex: 1 1 200px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .pie__redes a:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+
+  .charla-tarjeta:hover {
+    border-color: var(--accent);
+  }
+
+  .pie a:hover,
+  .enlace-flecha:hover {
+    text-decoration: underline;
+  }
+
+  .boton--claro:hover {
+    background: rgb(255 255 255 / 0.08);
+  }
+}
+
+@media (min-width: 760px) {
+  .portada {
+    padding: 40px 36px;
+  }
+
+  .portada__titulo {
+    font-size: 40px;
+  }
+
+  .portada__cifras {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .rejilla--3 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .seccion--dos {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .aviso-final {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .portada__acciones .boton {
+    flex: 0 0 auto;
+  }
+
+  .pie__columnas {
+    grid-template-columns: 2fr repeat(3, minmax(0, 1fr));
+  }
+
+  .pie__marca {
+    grid-column: auto;
+  }
+}
+
+@media (min-width: 1024px) {
+  .rejilla--3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}

@@ -42,9 +42,9 @@ Respuesta `200`, ordenada por hora de inicio:
 [
   {
     "id": 1,
-    "title": "Introduccion a la IA Generativa",
+    "title": "Introducción a la IA generativa",
     "description": "Que son los modelos de lenguaje y que usos reales tienen en una empresa",
-    "speaker": "Laura Martin",
+    "speaker": "Laura Martín",
     "starts_at": "2026-11-23T09:00:00.000000Z",
     "ends_at": "2026-11-23T10:00:00.000000Z",
     "room": "Sala 1",

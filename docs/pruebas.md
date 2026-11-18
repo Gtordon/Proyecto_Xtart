@@ -13,17 +13,17 @@ Datos de partida del seeder (todas las contraseñas son `password`; los títulos
 
 | Usuario | Perfil | Reservas al empezar |
 |---|---|---|
-| `ana@sabitech.test` | Asistente | RES-001 (Ciberseguridad) y RES-003 (Desarrollo de aplicaciones moviles) |
-| `alex@sabitech.test` | Asistente | RES-002 (Desarrollo de aplicaciones moviles) |
+| `ana@sabitech.test` | Asistente | RES-001 (Ciberseguridad) y RES-003 (Desarrollo de aplicaciones móviles) |
+| `alex@sabitech.test` | Asistente | RES-002 (Desarrollo de aplicaciones móviles) |
 | `carla@sabitech.test` | Asistente | Ninguna |
 | `organizacion@sabitech.test` | Organización | — |
 | `acceso@sabitech.test` | Personal de acceso | — |
 
 | Charla | Aforo | Plazas libres al empezar |
 |---|---|---|
-| 1 · Introduccion a la IA Generativa | 100 | 100 |
+| 1 · Introducción a la IA generativa | 100 | 100 |
 | 2 · Ciberseguridad en aplicaciones web | 2 | 1 |
-| 3 · Desarrollo de aplicaciones moviles | 2 | 0 (completa) |
+| 3 · Desarrollo de aplicaciones móviles | 2 | 0 (completa) |
 
 ## 1. Recorrido de la demo en el navegador
 
@@ -33,7 +33,7 @@ Hecho por Guillermo el 17/11/2026, después de `npm ci`, `npm run build` (sin er
 |---|---|---|---|
 | 1 | Abrir el programa sin sesión | 3 charlas con 100, 1 y 0 plazas | Correcto |
 | 2 | Entrar con `carla@sabitech.test` | Vuelve al programa con su nombre | Correcto |
-| 3 | Reservar "Introduccion a la IA Generativa" | "Tu plaza" y 99 plazas | Correcto |
+| 3 | Reservar "Introducción a la IA generativa" | "Tu plaza" y 99 plazas | Correcto |
 | 4 | Intentar reservarla otra vez | No deja; sale "Ver mi entrada" | Correcto |
 | 5 | Mirar la charla completa | "Completa" y "Sin plazas", sin botón | Correcto |
 | 6 | Ir a Mis reservas | La reserva aparece con su referencia | Correcto |

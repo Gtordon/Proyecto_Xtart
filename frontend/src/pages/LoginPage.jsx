@@ -32,7 +32,7 @@ function LoginPage({ onLogin }) {
     try {
       const datos = await iniciarSesion(email, password);
       onLogin(datos.token);
-      navigate(location.state?.volver ?? '/');
+      navigate(location.state?.volver ?? '/programa');
     } catch (e) {
       setErrorServidor(e.message);
     } finally {
