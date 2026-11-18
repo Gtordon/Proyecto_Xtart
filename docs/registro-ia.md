@@ -1,6 +1,10 @@
 # Registro de uso de IA · SABITECH WEB
 
-## 1. Herramientas
+Cada integrante del grupo tiene su apartado: Joan, Guillermo y Alberto.
+
+## Joan
+
+### 1. Herramientas
 
 | Herramienta | Tipo de ayuda | Apartados afectados | Quién lo ha hecho |
 |---|---|---| --- |
@@ -10,11 +14,11 @@
 | Codex | Contraste de documentación con el código | README, API y modelo de datos | Joan |
 | ChatGPT | Contraste de respuestas | Revisión general del proyecto | Joan |
 
-## 2. Casos de uso representativos
+### 2. Casos de uso representativos
 
 Estos nueve casos describen mi trabajo (Joan). En cada caso indico cuándo una decisión o una comprobación fue del equipo.
 
-### Caso 1. El modelo de datos: la IA se equivocó y lo corregimos
+#### Caso 1. El modelo de datos: la IA se equivocó y lo corregimos
 
 **Quién lo ha hecho.** Joan.
 
@@ -32,7 +36,7 @@ Estos nueve casos describen mi trabajo (Joan). En cada caso indico cuándo una d
 
 **Cómo se comprobó.** Contrastando el texto del enunciado y nuestro Tablas.pdf.
 
-### Caso 2. ¿Hacen falta ramas para cada documento? Comprobar lo que dice la IA
+#### Caso 2. ¿Hacen falta ramas para cada documento? Comprobar lo que dice la IA
 
 **Quién lo ha hecho.** Joan.
 
@@ -50,7 +54,7 @@ Estos nueve casos describen mi trabajo (Joan). En cada caso indico cuándo una d
 
 **Cómo se comprobó.** Búsqueda en el texto del enunciado: no aparecen «rama» ni «pull request».
 
-### Caso 3. Sanctum o token propio: la IA no adivinó y preguntamos al profesor
+#### Caso 3. Sanctum o token propio: la IA no adivinó y preguntamos al profesor
 
 **Quién lo ha hecho.** Joan.
 
@@ -68,7 +72,7 @@ Estos nueve casos describen mi trabajo (Joan). En cada caso indico cuándo una d
 
 **Cómo se comprobó.** php artisan db:table users (aparecen las dos columnas nuevas), php artisan tinker, curl de login y de logout, y probando desde la web.
 
-### Caso 4. El parche completo que descarté para programarlo yo
+#### Caso 4. El parche completo que descarté para programarlo yo
 
 **Quién lo ha hecho.** Joan.
 
@@ -86,7 +90,7 @@ Estos nueve casos describen mi trabajo (Joan). En cada caso indico cuándo una d
 
 **Cómo se comprobó.** Las del caso 3 para el login.
 
-### Caso 5. La reserva, programada por partes y probada en local
+#### Caso 5. La reserva, programada por partes y probada en local
 
 **Quién lo ha hecho.** Joan.
 
@@ -104,7 +108,7 @@ Estos nueve casos describen mi trabajo (Joan). En cada caso indico cuándo una d
 
 **Cómo se comprobó.** Pruebas con curl en local: 201 al reservar, 409 already_reserved al repetir, 404 talk_not_found, 401 sin sesión, 201 en la última plaza, 409 talk_full con la charla llena y 403 forbidden_role con el usuario de organización.
 
-### Caso 6. La hora salía mal en el ordenador de Guillermo
+#### Caso 6. La hora salía mal en el ordenador de Guillermo
 
 **Quién lo ha hecho.** Joan.
 
@@ -122,7 +126,7 @@ Estos nueve casos describen mi trabajo (Joan). En cada caso indico cuándo una d
 
 **Cómo se comprobó.** En el navegador, la charla de las 10:00 sale a las 10:00. Prueba automática «la hora se envia en hora de madrid».
 
-### Caso 7. «Access denied» en MySQL: la IA evitó una solución que no servía
+#### Caso 7. «Access denied» en MySQL: la IA evitó una solución que no servía
 
 **Quién lo ha hecho.** Joan.
 
@@ -140,7 +144,7 @@ Estos nueve casos describen mi trabajo (Joan). En cada caso indico cuándo una d
 
 **Cómo se comprobó.** php artisan tinker devolvió «users 5 talks 3» y la web volvió a cargar las charlas.
 
-### Caso 8. Los bocetos
+#### Caso 8. Los bocetos
 
 **Quién lo ha hecho.** Joan.
 
@@ -158,7 +162,7 @@ Estos nueve casos describen mi trabajo (Joan). En cada caso indico cuándo una d
 
 **Cómo se comprobó.** Los revisamos los 3.
 
-### Caso 9. Los vídeos de inglés: comprobar los minutos en el vídeo
+#### Caso 9. Los vídeos de inglés: comprobar los minutos en el vídeo
 
 **Quién lo ha hecho.** Joan.
 
@@ -176,7 +180,7 @@ Estos nueve casos describen mi trabajo (Joan). En cada caso indico cuándo una d
 
 **Cómo se comprobó.** Viendo cada vídeo y comprobando que realmente tenían información útil para el proyecto.
 
-## 3. Inventario de usos
+### 3. Inventario de usos
 
 Este inventario recoge el trabajo que hice yo, Joan, con las herramientas indicadas.
 
@@ -208,20 +212,20 @@ Este inventario recoge el trabajo que hice yo, Joan, con las herramientas indica
 
 ---
 
-# Registro de uso de IA · SABITECH WEB · Guillermo
+## Guillermo
 
-## 1. Herramientas
+### 1. Herramientas
 
 | Herramienta | Tipo de ayuda | Apartados afectados | Quién lo ha hecho |
 |---|---|---|---|
 | Claude (chat) | Explicaciones del enunciado y de Git, propuestas de código, revisión y redacción | Servidor (seeder), Interfaces (frontend y estilos), Intermodular (memoria) | Guillermo |
 | Claude con acceso a la carpeta del proyecto | Revisar el código en local, proponer cambios y sacar capturas de las pruebas | Interfaces y pruebas | Guillermo |
 
-## 2. Casos de uso representativos
+### 2. Casos de uso representativos
 
 Estos siete casos son de mi parte (Guillermo). Cuando algo lo decidió o lo revisó otro compañero, lo indico.
 
-### Caso 1. Cómo organizarnos con las ramas
+#### Caso 1. Cómo organizarnos con las ramas
 
 **Quién lo ha hecho.** Guillermo.
 
@@ -239,7 +243,7 @@ Estos siete casos son de mi parte (Guillermo). Cuando algo lo decidió o lo revi
 
 **Cómo se comprobó.** Todos mis cambios han entrado en `main` por PR revisados por Joan o Alberto.
 
-### Caso 2. Los datos de prueba del seeder
+#### Caso 2. Los datos de prueba del seeder
 
 **Quién lo ha hecho.** Guillermo.
 
@@ -257,7 +261,7 @@ Estos siete casos son de mi parte (Guillermo). Cuando algo lo decidió o lo revi
 
 **Cómo se comprobó.** `php artisan migrate:fresh --seed`, `db:seed` dos veces seguidas sin error y `GET /api/talks` devolviendo 100, 1 y 0 plazas libres.
 
-### Caso 3. Qué pide Diseño de Interfaces
+#### Caso 3. Qué pide Diseño de Interfaces
 
 **Quién lo ha hecho.** Guillermo.
 
@@ -275,7 +279,7 @@ Estos siete casos son de mi parte (Guillermo). Cuando algo lo decidió o lo revi
 
 **Cómo se comprobó.** Contrastando la lista con el enunciado y con el código que había en el repo.
 
-### Caso 4. El rediseño con Umbral Labs: lo que no acepté
+#### Caso 4. El rediseño con Umbral Labs: lo que no acepté
 
 **Quién lo ha hecho.** Guillermo.
 
@@ -293,7 +297,7 @@ Estos siete casos son de mi parte (Guillermo). Cuando algo lo decidió o lo revi
 
 **Cómo se comprobó.** Capturas en móvil y escritorio, contraste de los colores y PR revisado por Joan.
 
-### Caso 5. Pasar el diseño al frontend sin el «modo de ejemplo»
+#### Caso 5. Pasar el diseño al frontend sin el «modo de ejemplo»
 
 **Quién lo ha hecho.** Guillermo, con la revisión de Alberto.
 
@@ -311,7 +315,7 @@ Estos siete casos son de mi parte (Guillermo). Cuando algo lo decidió o lo revi
 
 **Cómo se comprobó.** Recorrido completo con el backend real: entrar, reservar, ver Mis reservas y salir.
 
-### Caso 6. Los avisos de la auditoría: los arreglé yo
+#### Caso 6. Los avisos de la auditoría: los arreglé yo
 
 **Quién lo ha hecho.** Guillermo. La auditoría la había preparado Joan.
 
@@ -329,7 +333,7 @@ Estos siete casos son de mi parte (Guillermo). Cuando algo lo decidió o lo revi
 
 **Cómo se comprobó.** Las 9 pruebas del recorrido en el navegador correctas y `npm run build` sin errores.
 
-### Caso 7. Una memoria menos acartonada
+#### Caso 7. Una memoria menos acartonada
 
 **Quién lo ha hecho.** Guillermo.
 
@@ -347,7 +351,7 @@ Estos siete casos son de mi parte (Guillermo). Cuando algo lo decidió o lo revi
 
 **Cómo se comprobó.** Comparando lo escrito con el código del repo y con mis pruebas del 17/11. La revisamos en equipo antes de entregar.
 
-## 3. Inventario de usos
+### 3. Inventario de usos
 
 Este inventario recoge el trabajo que hice yo, Guillermo, con las herramientas indicadas.
 
