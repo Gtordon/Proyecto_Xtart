@@ -11,7 +11,7 @@
   --raised: #eef2f8;
   --border: #e1e6ef;
   --rule: #eceff5;
-  --control: #cbd3e1;
+  --control: #7c8799;
   --text: #0e1a33;
   --muted: #586178;
 
@@ -925,11 +925,11 @@ a {
 }
 
 .asiento--ocupado {
-  background: var(--accent-track);
+  background: #6f8cc4;
 }
 
 .asiento--mio {
-  background: var(--accent);
+  background: var(--accent-ink);
   animation: asiento-mio 300ms var(--ease-out) both;
 }
 
