@@ -368,3 +368,87 @@ Este inventario recoge el trabajo que hice yo, Guillermo, con las herramientas i
 | 17/11/2026 | Claude | Auditoría del frontend | Dónde arreglar cada aviso | Cambios hechos por mí en 4 archivos | 9 pruebas manuales y `npm run build` | Guillermo |
 | 17/11/2026 | Claude con acceso al proyecto | Capturas de las pruebas | Sacar las capturas del recorrido para la memoria | 12 capturas en `docs/capturas_pruebas/` | Revisadas una a una contra la web | Guillermo |
 | 17/11/2026 | Claude | Documentación y memoria | Redactar `pruebas.md`, `permisos.md`, `digitalizacion.md` y la memoria | Pedí un tono más natural y revisé el contenido | Comparado con el código y las pruebas | Guillermo |
+
+---
+
+## Alberto
+
+### 1. Herramientas
+
+| Herramienta | Tipo de ayuda | Apartados afectados | Quién lo ha hecho |
+|---|---|---|---|
+| Claude (con acceso a mis archivos, a Google Drive y a Google Docs) | Borradores, comprobación de fuentes, cálculos, preparación de la presentación y edición de documentos | IPE II (empresa y validación), Intermodular (memoria y presentación) e Interfaces (tabla de eventos del frontend) | Alberto |
+
+### 2. Casos de uso representativos
+
+Estos tres casos son de mi parte (Alberto). Cuando algo lo decidió o lo revisó otro compañero, lo indico.
+
+#### Caso 1. El borrador de la empresa: la IA dio un identificador de BOE equivocado
+
+**Quién lo ha hecho.** Alberto.
+
+**Fecha y herramienta.** 29/10 al 16/11/2026 · Claude
+
+**Contexto.** La parte de IPE II la llevo yo, porque Joan y Guillermo la tienen convalidada. Hacía falta un borrador de la empresa ficticia con forma jurídica, personal, costes y validación, apoyado en fuentes oficiales.
+
+**Prompt (texto original, sin el nombre del asistente).** «Hola, necesito que revises qué parte del trabajo final de SABITECH es de IPE»
+
+**Qué propuso la IA.** Un borrador con marcas de lo que estaba por decidir, comprobar o hacer, y con las cifras de la Ley 18/2022, del XIX convenio colectivo y de la Orden de cotización. Para esa Orden dio el identificador BOE-A-2026-7000, que apuntaba a otro documento.
+
+**Qué hicimos.** Acepté la estructura y tomé yo las decisiones: sociedad limitada con tres socios, público de organizadores de charlas y modelo de ingresos. Descarté el identificador equivocado y lo cambié por el correcto, BOE-A-2026-7296.
+
+**Por qué.** No podía citar una fuente que llevaba a otro documento.
+
+**Cómo se comprobó.** Abriendo el texto del BOE de la ley, del convenio y de la Orden, y consultando el artículo 15 del Estatuto de los Trabajadores el 16/11. Revisé el resultado final frente a esas fuentes antes de darlo por bueno. El 18/11 se contrastaron también el salario de 2026 (13.952,29 € de base y 3.120,99 € de plus, 17.073,28 € al año), las 14 pagas (artículo 27.1) y la jornada de 1.800 horas (artículo 20.1).
+
+#### Caso 2. Las entrevistas de validación: las respuestas son de las personas, no de la IA
+
+**Quién lo ha hecho.** Alberto.
+
+**Fecha y herramienta.** 17/11/2026 · Claude
+
+**Contexto.** La validación de la idea necesitaba personas reales, y la IA no puede contestar por ellas.
+
+**Resumen del prompt.** Pedí a la IA las preguntas que debía hacer a la segunda persona de la validación, para pegarle después sus respuestas, y que añadiera contexto del proyecto para que cualquier persona pudiera contestarlas.
+
+**Qué propuso la IA.** Seis preguntas abiertas sobre cómo se apuntan hoy, qué problemas tienen, cómo gestionan una charla llena, cómo controlan la entrada, qué opinan del prototipo y cuánto pagarían. Después le pedí que añadiera contexto, para que cualquier persona pudiera contestar sin conocer el proyecto.
+
+**Qué hicimos.** Hice las preguntas a un compañero de 2.º DAW y a un familiar que organiza jornadas, y pegué sus respuestas tal como las recibí. La IA las resumió en el registro de validación y anotó el sesgo de cada uno (compañero de clase y familiar).
+
+**Por qué.** Para no inventar ninguna respuesta y que el resumen fuera fiel a lo que dijeron.
+
+**Cómo se comprobó.** Comparando punto por punto el resumen con las respuestas originales. Coincidían. Revisé el resultado final antes de darlo por bueno.
+
+#### Caso 3. La tabla de eventos, estados y errores: la IA se equivocó en un código
+
+**Quién lo ha hecho.** Alberto.
+
+**Fecha y herramienta.** 17/11/2026 · Claude
+
+**Contexto.** La memoria necesitaba una tabla con los eventos, estados y errores del frontend, que describiera solo lo que existe.
+
+**Resumen del prompt.** Pedí a la IA que elaborara la tabla de eventos, estados y errores del frontend a partir del código existente.
+
+**Qué propuso la IA.** Una tabla basada en el código de `frontend/src` de `main`, con las llamadas a la API y los mensajes de cada error.
+
+**Qué hicimos.** La revisé y la subí como `docs/frontend-eventos-estados-errores.md` (PR #39). Después se corrigieron tres puntos en la PR #41: entre ellos, que `talk_started` devuelve 409 y no 422, y que tras reservar las plazas se vuelven a pedir al servidor.
+
+**Por qué.** La memoria no puede decir algo que el código no hace.
+
+**Cómo se comprobó.** Contrastando la tabla con el código y con la API. La revisión posterior encontró los tres puntos que no coincidían. Revisé el resultado final antes de darlo por bueno.
+
+### 3. Inventario de usos
+
+Este inventario recoge el trabajo que hice yo, Alberto, con las herramientas indicadas.
+
+| Fecha | Herramienta | Apartado | Petición | Resultado | Comprobación | Quién lo ha hecho |
+|---|---|---|---|---|---|---|
+| 29/10–16/11/2026 | Claude | IPE II: empresa | Preparar el borrador de Umbral Labs SL con marcas de lo pendiente | Acepté la estructura y decidí yo la forma jurídica, el público y los ingresos. Corregí un identificador de BOE equivocado | Cifras de la ley, el convenio y la Orden contrastadas en el BOE | Alberto |
+| 15/11/2026 | Claude | Presentación del checkpoint | Preparar la presentación completa y una versión corta de 7 diapositivas | Usé la presentación como base y relleno a mano los huecos | Pendiente de concretar | Alberto |
+| 16/11/2026 | Claude | Reparto de tareas | Hacer un Excel con el reparto y el organigrama según lo que cada uno hace de verdad | Usé el reparto como guía para completar las tareas | Pendiente de concretar | Alberto |
+| 17/11/2026 | Claude | IPE II: validación | Proponer las preguntas de las entrevistas y resumir las respuestas | Usé las preguntas con dos personas y pegué sus respuestas tal cual | Resumen comparado punto por punto con las respuestas originales | Alberto |
+| 17/11/2026 | Claude | Tabla de eventos, estados y errores del frontend | Describir solo lo que existe en el código de `frontend/src` | PR #39; después se corrigieron tres puntos en la PR #41 | Tabla contrastada con el código y la API | Alberto |
+| 17–18/11/2026 | Claude | Memoria (Google Doc) | Redactar mis apartados (empresa, frontend, registro de IA y referencias) y editarlos en el documento | Revisé el texto y quité o cambié lo que no me parecía correcto | Releí el documento tras cada cambio y contrasté los datos con las fuentes | Alberto |
+| 18/11/2026 | Claude | IPE II: costes y viabilidad | Calcular horas, valorar el trabajo de los socios y proponer cuotas, alojamiento y viabilidad | Horas y cuotas decididas por el equipo. Precios de servidor, dominio y correo marcados como pendientes | Salario, 14 pagas y jornada de 1.800 horas comprobados en el BOE. Precios de terceros sin confirmar | Alberto |
+| 18/11/2026 | Claude | `docs/empresa.md` | Reescribir el apartado de empresa con lo cerrado ese día | Lo subí por la rama `ipe-empresa-costes` (PR #47, aceptada) | Revisado en la PR | Alberto |
+| 18/11/2026 | Claude | Registro de IA | Preparar mis entradas con el formato de Joan y Guillermo | Las entradas se revisan en la PR antes de aceptarlas | Pendiente de concretar | Alberto |
