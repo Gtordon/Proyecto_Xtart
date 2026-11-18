@@ -32,9 +32,9 @@ Elige **una** opción. Las dos usan el puerto 3306, así que no las tengas encen
 
 **Opción A: Docker**
 
-Desde la carpeta del proyecto, donde está el archivo docker-compose.yml, ejecuta:
+Desde la carpeta del proyecto, donde está el archivo docker-compose.yml, arranca solo la base de datos:
 ```bash
-docker compose up -d
+docker compose up -d db
 ```
 
 Crea la base de datos `sabitech` con el usuario `root` y la contraseña `admin123`, que son los valores de `backend/.env.example`.
@@ -82,6 +82,26 @@ Abre `http://localhost:5173`.
 4. Mantén el backend en marcha y abre otra ventana de PowerShell en la carpeta del proyecto. Sigue el paso 4 y abre `http://localhost:5173`.
 
 Para ejecutar las comprobaciones del apartado Pruebas en PowerShell, usa `php artisan test` desde `backend` con `pdo_sqlite` habilitado. Desde `frontend`, ejecuta `npm run lint` y `npm run build` en líneas separadas.
+
+## Arrancar todo con Docker
+
+Con Docker Desktop encendido, desde la carpeta del proyecto:
+
+```bash
+docker compose up -d --build
+```
+
+Levanta tres contenedores:
+
+| Contenedor | Qué hace | Dirección |
+|---|---|---|
+| `sabitech-db` | MySQL 8.4 con la base de datos `sabitech` | puerto 3306 |
+| `sabitech-backend` | Laravel (PHP 8.3). Al arrancar crea las tablas y carga los datos de prueba | `http://localhost:8000/api` |
+| `sabitech-frontend` | Nginx con la web compilada; reenvía `/api` al backend | `http://localhost:8080` |
+
+La primera vez tarda unos minutos porque descarga las imágenes e instala las dependencias. Para ver qué está pasando: `docker compose logs -f backend`. Para pararlo: `docker compose down` (los datos se guardan en el volumen `db_data`; `docker compose down -v` los borra).
+
+No lo tengas encendido a la vez que `php artisan serve` o MySQL local: usan los mismos puertos (8000 y 3306).
 
 ## Cuentas de prueba
 
