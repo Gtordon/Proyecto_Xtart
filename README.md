@@ -143,6 +143,15 @@ Las pruebas del backend usan SQLite en memoria y no tocan tu base de datos. GitH
 - [Modelo de datos](docs/modelo-datos.md)
 - [Empresa: Umbral Labs SL](docs/empresa.md)
 - [Registro de uso de IA](docs/registro-ia.md)
+- [Guía de estilos](docs/guia-estilos.md)
+- [Eventos, estados y errores del frontend](docs/frontend-eventos-estados-errores.md)
+- [Funcionamiento del correo de confirmación](docs/funcionamiento-correo.md)
+- [Funcionamiento del QR de asistencia](docs/funcionamiento-qr.md)
+- [Pruebas](docs/pruebas.md)
+- [Permisos](docs/permisos.md)
+- [Digitalización](docs/digitalizacion.md)
+- [Capturas de las pruebas](docs/capturas_pruebas/)
+- [Bocetos](docs/bocetos/)
 
 ## Forma de trabajo
 
