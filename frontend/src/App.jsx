@@ -155,7 +155,7 @@ function App() {
         }
       })
       .catch(() => {
-        if (!cancelado) setError('A ocurrido un error. No se pudo conectar con el servidor.');
+        if (!cancelado) setError('Ha ocurrido un error. No se pudo conectar con el servidor.');
       })
       .finally(() => {
         if (!cancelado) setCargando(false);
