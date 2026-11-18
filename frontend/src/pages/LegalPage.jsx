@@ -1,15 +1,7 @@
 // Aviso legal, privacidad y cookies. Describe lo que la web hace de verdad con los datos.
-import { useEffect } from 'react';
-import { useLocation } from 'react-router';
+// El desplazamiento a los apartados (/legal#privacidad, etc.) lo hace App.
 
 function LegalPage() {
-  const { hash } = useLocation();
-
-  // Los enlaces del pie llevan a /legal#privacidad, etc.: se baja hasta ese apartado
-  useEffect(() => {
-    if (hash) document.getElementById(hash.slice(1))?.scrollIntoView();
-  }, [hash]);
-
   return (
     <div className="pagina pagina--texto">
       <header className="cabecera">
@@ -33,7 +25,10 @@ function LegalPage() {
         <ul className="lista-texto">
           <li>Nombre y correo, para identificar a cada persona.</li>
           <li>La contraseña, siempre cifrada.</li>
-          <li>El token de la sesión: solo se guarda su huella (hash) y caduca a las 8 horas.</li>
+          <li>
+            El token de la sesión: tu navegador guarda el token y el servidor solo guarda su huella (hash), nunca el
+            token en sí. Caduca a las 8 horas.
+          </li>
           <li>Las reservas de cada persona, que solo puede ver ella misma.</li>
         </ul>
         <p className="bloque__texto">Las cuentas las crea la organización y en las pruebas solo se usan datos inventados.</p>

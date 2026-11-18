@@ -120,8 +120,15 @@ Al revisar la guía vimos que el borde de los campos (1,5 a 1) y el asiento ocup
 | Ficha de fecha | Día grande y mes corto | Detalle y Mis reservas |
 | Mensaje | Franja con fondo pálido: verde si sale bien, rojo si falla | Resultado de reservar, errores de carga |
 | Campo de formulario | Etiqueta visible encima, error debajo enlazado con `aria-describedby` | Entrar |
-| Crédito de la empresa | "Desarrollado por Umbral Labs" en pequeño, con "Labs" en azul | Pie de la barra lateral y del menú del móvil |
+| Crédito de la empresa | "Desarrollado por Umbral Labs" en pequeño, con "Labs" en azul | Pie de la barra lateral, del menú del móvil y pie de página |
 | Iconos | Un solo juego, trazo de 1,5 px y 16 px, ocultos a los lectores de pantalla | Menú y botones |
+| Portada | Bloque marino con antetítulo azul claro, título grande, dos botones (principal y claro) y cuatro cifras | Inicio |
+| Botón claro | Borde blanco semitransparente sobre fondo marino | Portada del inicio |
+| Bloque con icono | Tarjeta con icono sobre fondo azul pálido, título y texto | Ventajas del inicio, Información |
+| Tarjeta de charla | Toda la tarjeta es un enlace: hora y sala, título, ponente y píldora de plazas; borde azul al pasar el ratón | Inicio |
+| Preguntas frecuentes | `<details>` nativo con flecha propia que gira al abrir; se usa con teclado | Inicio, Información |
+| Mapa | Google Maps incrustado, 220 px de alto, con enlace para abrirlo aparte | Información |
+| Pie de página | Cuatro columnas (marca, Jornadas, Tu cuenta, Legal) que pasan a dos en móvil; iconos de Instagram y Facebook en círculo | Todas las pantallas |
 
 ## 6. Movimiento
 

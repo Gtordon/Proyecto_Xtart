@@ -219,10 +219,13 @@ function App() {
     return () => { cancelado = true; };
   }, [enPrograma, location.pathname, recargarReservas]);
 
-  // Cada pantalla empieza arriba
+  // Cada pantalla empieza arriba, salvo que la URL lleve ancla (/legal#privacidad):
+  // entonces se baja hasta ese apartado. Es el único sitio que controla el scroll.
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [location.pathname]);
+    const destino = location.hash && document.getElementById(location.hash.slice(1));
+    if (destino) destino.scrollIntoView();
+    else window.scrollTo(0, 0);
+  }, [location.pathname, location.hash]);
 
   const contexto = { token, reservas, recargarReservas, onSesionInvalida: sesionInvalida };
   const tituloMovil = TITULOS[location.pathname] ?? 'Charla';
