@@ -41,11 +41,11 @@ class DatabaseSeeder extends Seeder
         $accessStaffRole = Role::where('name', Role::ACCESS_STAFF)->firstOrFail();
 
         $laura = Speaker::firstOrCreate(
-            ['name' => 'Laura Martin'],
+            ['name' => 'Laura Martín'],
             ['bio' => 'Especialista en inteligencia artificial']
         );
         $paco = Speaker::firstOrCreate(
-            ['name' => 'Paco ibañez'],
+            ['name' => 'Paco Ibáñez'],
             ['bio' => 'Experto en cyberseguridad para las aplicaciones Web']
         );
         $santiago = Speaker::firstOrCreate(
@@ -98,7 +98,7 @@ class DatabaseSeeder extends Seeder
         // Charlas de ejemplo: una con muchas plazas, otra casi completa y una completa.
         // Se usa el título para encontrar cada charla y actualizarla al repetir el seeder.
         Talk::updateOrCreate(
-            ['title' => 'Introduccion a la IA Generativa'],
+            ['title' => 'Introducción a la IA generativa'],
             [
                 'description' => 'Que son los modelos de lenguaje y que usos reales tienen en una empresa',
                 'speaker_id' => $laura->id,
@@ -120,7 +120,7 @@ class DatabaseSeeder extends Seeder
             ]
         );
         $charlaCompleta = Talk::updateOrCreate(
-            ['title' => 'Desarrollo de aplicaciones moviles'],
+            ['title' => 'Desarrollo de aplicaciones móviles'],
             [
                 'description' => 'Como crear aplicaciones móviles multiplataforma con Flutter',
                 'speaker_id' => $santiago->id,

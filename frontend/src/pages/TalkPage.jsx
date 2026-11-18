@@ -62,7 +62,7 @@ function TalkPage({ token, reservas, recargarReservas, onSesionInvalida }) {
   if (errorCarga) {
     return (
       <div className="pagina">
-        <Link to="/" className="volver"><Icono nombre="atras" />Programa</Link>
+        <Link to="/programa" className="volver"><Icono nombre="atras" />Programa</Link>
         <p className="mensaje mensaje--error" role="alert">{errorCarga}</p>
       </div>
     );
@@ -88,7 +88,7 @@ function TalkPage({ token, reservas, recargarReservas, onSesionInvalida }) {
 
   return (
     <div className="pagina">
-      <Link to="/" className="volver"><Icono nombre="atras" />Programa</Link>
+      <Link to="/programa" className="volver"><Icono nombre="atras" />Programa</Link>
 
       <header className="objeto tarjeta">
         <FichaFecha iso={charla.starts_at} />

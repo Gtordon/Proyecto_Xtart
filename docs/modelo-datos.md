@@ -137,8 +137,8 @@ En una instalación nueva, `php artisan migrate --seed` crea las tablas y carga 
 | Dato | Detalle |
 |---|---|
 | Cuentas | `ana`, `alex` y `carla` (asistentes), `organizacion` (organizador) y `acceso` (personal de acceso), todas `@sabitech.test` con contraseña `password` |
-| Ponentes | Laura Martin, Paco Ibañez, Santiago García |
-| Charlas (dentro de 7 días) | Introduccion a la IA Generativa, 10:00, 100 plazas libres · Ciberseguridad en aplicaciones web, 12:00, 1 plaza libre · Desarrollo de aplicaciones moviles, 14:00, completa |
+| Ponentes | Laura Martín, Paco Ibañez, Santiago García |
+| Charlas (dentro de 7 días) | Introducción a la IA generativa, 10:00, 100 plazas libres · Ciberseguridad en aplicaciones web, 12:00, 1 plaza libre · Desarrollo de aplicaciones móviles, 14:00, completa |
 | Reservas | Ana en Ciberseguridad y en Móviles; Alex en Móviles |
 
 Las fechas son relativas al día en que se ejecuta el seeder, para que las charlas estén siempre en el futuro durante la demo.

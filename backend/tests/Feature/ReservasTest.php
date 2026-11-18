@@ -26,7 +26,7 @@ class ReservasTest extends TestCase
 
     public function test_asistente_reserva_una_plaza(): void
     {
-        $charla = $this->charla('Introduccion a la IA Generativa');
+        $charla = $this->charla('Introducción a la IA generativa');
 
         $this->withToken($this->tokenDe('ana@sabitech.test'))
             ->postJson("/api/talks/{$charla->id}/reservations")
@@ -42,7 +42,7 @@ class ReservasTest extends TestCase
 
     public function test_no_se_puede_reservar_dos_veces_la_misma_charla(): void
     {
-        $charla = $this->charla('Introduccion a la IA Generativa');
+        $charla = $this->charla('Introducción a la IA generativa');
         $token = $this->tokenDe('ana@sabitech.test');
 
         $this->withToken($token)->postJson("/api/talks/{$charla->id}/reservations")->assertCreated();
@@ -54,7 +54,7 @@ class ReservasTest extends TestCase
 
     public function test_no_se_puede_reservar_una_charla_completa(): void
     {
-        $charla = $this->charla('Desarrollo de aplicaciones moviles');
+        $charla = $this->charla('Desarrollo de aplicaciones móviles');
 
         $this->withToken($this->tokenDe('carla@sabitech.test'))
             ->postJson("/api/talks/{$charla->id}/reservations")
@@ -78,7 +78,7 @@ class ReservasTest extends TestCase
 
     public function test_no_se_puede_reservar_una_charla_que_ya_ha_empezado(): void
     {
-        $charla = $this->charla('Introduccion a la IA Generativa');
+        $charla = $this->charla('Introducción a la IA generativa');
         $charla->update(['starts_at' => now()->subHour(), 'ends_at' => now()->addHour()]);
 
         $this->withToken($this->tokenDe('carla@sabitech.test'))
@@ -97,7 +97,7 @@ class ReservasTest extends TestCase
 
     public function test_solo_los_asistentes_pueden_reservar(): void
     {
-        $charla = $this->charla('Introduccion a la IA Generativa');
+        $charla = $this->charla('Introducción a la IA generativa');
 
         $this->withToken($this->tokenDe('organizacion@sabitech.test'))
             ->postJson("/api/talks/{$charla->id}/reservations")
@@ -107,7 +107,7 @@ class ReservasTest extends TestCase
 
     public function test_reservar_sin_sesion_devuelve_401(): void
     {
-        $charla = $this->charla('Introduccion a la IA Generativa');
+        $charla = $this->charla('Introducción a la IA generativa');
 
         $this->postJson("/api/talks/{$charla->id}/reservations")
             ->assertStatus(401)
