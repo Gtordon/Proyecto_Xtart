@@ -391,7 +391,7 @@ Estos tres casos son de mi parte (Alberto). Cuando algo lo decidió o lo revisó
 
 ---
 
-## Inventario de usos (los tres)
+## Inventario de usos
 
 Todos los usos de IA del equipo en una sola tabla, por orden de fecha. Cada fila indica quién lo hizo; los casos detallados están en el apartado de cada uno.
 
