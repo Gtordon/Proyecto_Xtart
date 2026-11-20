@@ -180,36 +180,6 @@ Estos nueve casos describen mi trabajo (Joan). En cada caso indico cuándo una d
 
 **Cómo se comprobó.** Viendo cada vídeo y comprobando que realmente tenían información útil para el proyecto.
 
-### 3. Inventario de usos
-
-Este inventario recoge el trabajo que hice yo, Joan, con las herramientas indicadas.
-
-| Fecha | Herramienta | Apartado | Petición | Resultado | Comprobación | Quién lo ha hecho |
-|---|---|---|---|---|---| --- |
-| 04/11/2026 | Claude | Guía de organización | Le pasé el enunciado y el Gantt y le pedí una guía para el checkpoint | Usé la guía como orientación | Contrasté las tareas con el enunciado | Joan |
-| 04/11/2026 | Claude | Plan de la clase: repositorio y bocetos | Pedí un paso a paso para trabajar en una hora | Pendiente de precisar qué se aprovechó del plan | Comprobé que el diseño de referencia encajaba con lo que queríamos | Joan |
-| 04/11/2026 | Claude in Chrome | Bocetos en Figma | Intentar dibujarlos desde el navegador | Descarté el intento porque el editor no cargó y quedó un archivo vacío | Capturas de la sesión | Joan |
-| 04/11/2026 | Claude | Bocetos de inicio de sesión y reservas | Generar imágenes de referencia | Usé las imágenes para dibujar mis bocetos en draw.io | Los revisamos entre los tres | Joan |
-| 05/11/2026 | Claude | Requisitos y pantallas | Pedí una explicación paso a paso de las primeras tareas | Usé la propuesta como orientación y escribí los documentos | Pendiente de concretar | Joan |
-| 06/11/2026 | Claude | Modelo de datos y migraciones | Revisar qué tablas exigía el enunciado | Descartamos el primer diseño de la IA y mantuvimos las seis tablas del equipo. La IA preparó las migraciones | Contrasté la propuesta con el enunciado y `Tablas.pdf` | Joan |
-| 06/11/2026 | Claude | API de charlas | Preparar el listado y el detalle paso a paso | Integré `TalkController` y las rutas (commit `52ef605`) | Probé el listado y el detalle en el navegador con una charla y comprobé el 404 para un ID inexistente | Joan |
-| 04–09/11/2026 | Claude (Claude Docs) | Material de estudio | Explicar lo hecho en lenguaje sencillo para poder defenderlo | Lo usé como material de estudio | — | Joan |
-| 06/11/2026 | Claude | Inglés Oral | Buscar dos vídeos y preparar un borrador con referencias APA | Descarté el borrador. Vi los vídeos y aproveché la información pertinente | Comprobé las referencias de tiempo en el propio vídeo | Joan |
-| 09/11/2026 | Claude | Parche de backend, pruebas, documentación y CI | Poner al día las tareas pendientes | Descarté el parche y lo usé como referencia mientras programaba paso a paso | Claude ejecutó 24 pruebas y peticiones con curl en su propia copia | Joan |
-| 09–10/11/2026 | Claude | Inicio de sesión y errores JSON | Pedí una explicación para programar el token propio | Escribí el código siguiendo la guía (commits `39a9390`, `039fef1` y `c2456bc`) | Revisé la tabla de usuarios y probé el login y el logout con curl y en la web | Joan |
-| 13/11/2026 | Claude | Reservar plaza y Mis reservas | Pedí ayuda paso a paso para entender la lógica | Escribí el código por partes (commits `3b62b6f`, `dbe88df` y `c5492ad`) | Probé con curl los resultados del caso 5 | Joan |
-| 16/11/2026 | Claude | Planificación del checkpoint | Pedí un diagnóstico, una plantilla de memoria, un tablero y un PPT | Copié el tablero a Drive. El borrador indica que la plantilla, el tablero y el PPT seguían sin utilizarse | — | Joan |
-| 16/11/2026 | Claude | MySQL y rescate de documentos | Investigar por qué Laravel no conectaba | Seguí los pasos para liberar el puerto 3306 y arrancar el MySQL de Homebrew | La web volvió a cargar las charlas | Joan |
-| 16/11/2026 | Claude | Seeder | Añadir a Carla para probar una charla sin plazas | Acepté el cambio (commit `1c4b42a`) | Recargué los datos de prueba y comprobé que Carla recibía `talk_full` | Joan |
-| 16/11/2026 | Claude | Zona horaria y errores de la API | Revisar el desfase de una hora y las respuestas con datos internos | Acepté el cambio (commit `b0fcd15`) | Verifiqué la hora en el navegador. La prueba automática se añadió el 17/11 | Joan |
-| 16/11/2026 | Claude Code (Fable) | Material de referencia en `~/sabitech-referencia` | Preparar una versión de referencia a partir del enunciado y el repositorio | Descarté los 17 commits y los materiales generados para la entrega | — | Joan |
-| 17/11/2026 | Claude | Pruebas, CI, API, modelo de datos y README | Escribir pruebas, recuperar la CI y documentar el código real | Revisé la propuesta y se ajustaron Laravel, el texto de la API y las acciones de CI. También se quitó un archivo vacío | 22 pruebas del backend correctas. Lint y build sin errores | Joan |
-| 17/11/2026 | Claude | Auditoría del checkpoint y revisión de `tests-docs-ci` | Contrastar el proyecto con el enunciado | Aproveché el plan y el reparto de tareas | Claude probó en un entorno aislado SQLite, MySQL, la API, ocho intentos simultáneos para la última plaza y el recorrido en navegador | Joan |
-| 17/11/2026 | Claude | Registro de IA | Reconstruir los usos a partir de chats, Git y documentos | Completé el borrador con un cuestionario | Revisé las referencias a chats, archivos y commits | Joan |
-| 17/11/2026 | Codex | API, modelo de datos y README | Contrastar la documentación con el código y las migraciones y corregir las discrepancias | Acepté las correcciones de la documentación | Comparación con las rutas, el frontend y las migraciones | Joan |
-| Fecha pendiente | ChatGPT | Revisión general | Pedí una segunda comprobación del proyecto | Contrasté respuestas de Claude | Pendiente de concretar | Joan |
-| 17/11/2026 | ChatGPT | Registro de IA, README y demás archivos revisados | Pasar el borrador del registro a Markdown y revisar el README y los demás archivos | Usé la ayuda para convertir el registro y revisar la documentación del proyecto | Comparé el registro con el borrador y la documentación con los archivos del proyecto | Joan |
-
 ---
 
 ## Guillermo
@@ -351,24 +321,6 @@ Estos siete casos son de mi parte (Guillermo). Cuando algo lo decidió o lo revi
 
 **Cómo se comprobó.** Comparando lo escrito con el código del repo y con mis pruebas del 17/11. La revisamos en equipo antes de entregar.
 
-### 3. Inventario de usos
-
-Este inventario recoge el trabajo que hice yo, Guillermo, con las herramientas indicadas.
-
-| Fecha | Herramienta | Apartado | Petición | Resultado | Comprobación | Quién lo ha hecho |
-|---|---|---|---|---|---|---|
-| 09/11/2026 | Claude | Organización con Git | Cómo trabajar con ramas y `main` | Rama por tarea y PR revisado; no reorganicé las ramas viejas | PR revisados en el repo | Guillermo |
-| 09/11/2026 | Claude | Seeder | Escribir los datos de prueba | Adapté datos y corregí dos fallos | `migrate:fresh --seed` y `GET /api/talks` | Guillermo |
-| 10/11/2026 | Claude | Seeder | Arreglar el error al relanzarlo | Pasé todo a `firstOrCreate` | `db:seed` dos veces sin error | Guillermo |
-| 12/11/2026 | Claude | Router, páginas y login | Montar el frontend con los pasos del enunciado | Usé el código; corregí yo los errores de tecleo que dejaban la pantalla en blanco | `npm run dev`; PR #29 y #30 revisados por Joan | Guillermo |
-| 13/11/2026 | Claude | Diseño de Interfaces | Qué pide el módulo para los estilos | Lista de control; vimos que el CSS era aún el de Vite | Contraste con el enunciado | Guillermo |
-| 15/11/2026 | Claude | Primera versión del diseño | Diseño limpio y fluido | Se descartó al pasar a la propuesta de rediseño | Capturas en móvil y escritorio | Guillermo |
-| 16/11/2026 | Claude | Paso de la demo al frontend | Aplicar el diseño en el proyecto | Aceptado sin el modo de ejemplo | Recorrido con el backend real; revisión de Alberto en el PR #34 | Guillermo |
-| 16/11/2026 | Claude | Identidad Umbral Labs | Colores, logo y nombre | Colores y firma sí; nombre no | Capturas y PR #37 revisado por Joan | Guillermo |
-| 17/11/2026 | Claude | Auditoría del frontend | Dónde arreglar cada aviso | Cambios hechos por mí en 4 archivos | 9 pruebas manuales y `npm run build` | Guillermo |
-| 17/11/2026 | Claude con acceso al proyecto | Capturas de las pruebas | Sacar las capturas del recorrido para la memoria | 12 capturas en `docs/capturas_pruebas/` | Revisadas una a una contra la web | Guillermo |
-| 17/11/2026 | Claude | Documentación y memoria | Redactar `pruebas.md`, `permisos.md`, `digitalizacion.md` y la memoria | Pedí un tono más natural y revisé el contenido | Comparado con el código y las pruebas | Guillermo |
-
 ---
 
 ## Alberto
@@ -437,18 +389,54 @@ Estos tres casos son de mi parte (Alberto). Cuando algo lo decidió o lo revisó
 
 **Cómo se comprobó.** Contrastando la tabla con el código y con la API. La revisión posterior encontró los tres puntos que no coincidían. Revisé el resultado final antes de darlo por bueno.
 
-### 3. Inventario de usos
+---
 
-Este inventario recoge el trabajo que hice yo, Alberto, con las herramientas indicadas.
+## Inventario de usos
 
-| Fecha | Herramienta | Apartado | Petición | Resultado | Comprobación | Quién lo ha hecho |
+Todos los usos de IA del equipo en una sola tabla, por orden de fecha. Cada fila indica quién lo hizo; los casos detallados están en el apartado de cada uno.
+
+| Fecha | Herramienta | Apartado | Petición | Resultado | Comprobación | Quién |
 |---|---|---|---|---|---|---|
 | 29/10–16/11/2026 | Claude | IPE II: empresa | Preparar el borrador de Umbral Labs SL con marcas de lo pendiente | Acepté la estructura y decidí yo la forma jurídica, el público y los ingresos. Corregí un identificador de BOE equivocado | Cifras de la ley, el convenio y la Orden contrastadas en el BOE | Alberto |
+| 04/11/2026 | Claude | Guía de organización | Le pasé el enunciado y el Gantt y le pedí una guía para el checkpoint | Usé la guía como orientación | Contrasté las tareas con el enunciado | Joan |
+| 04/11/2026 | Claude | Plan de la clase: repositorio y bocetos | Pedí un paso a paso para trabajar en una hora | Pendiente de precisar qué se aprovechó del plan | Comprobé que el diseño de referencia encajaba con lo que queríamos | Joan |
+| 04/11/2026 | Claude in Chrome | Bocetos en Figma | Intentar dibujarlos desde el navegador | Descarté el intento porque el editor no cargó y quedó un archivo vacío | Capturas de la sesión | Joan |
+| 04/11/2026 | Claude | Bocetos de inicio de sesión y reservas | Generar imágenes de referencia | Usé las imágenes para dibujar mis bocetos en draw.io | Los revisamos entre los tres | Joan |
+| 04–09/11/2026 | Claude (Claude Docs) | Material de estudio | Explicar lo hecho en lenguaje sencillo para poder defenderlo | Lo usé como material de estudio | — | Joan |
+| 05/11/2026 | Claude | Requisitos y pantallas | Pedí una explicación paso a paso de las primeras tareas | Usé la propuesta como orientación y escribí los documentos | Pendiente de concretar | Joan |
+| 06/11/2026 | Claude | Modelo de datos y migraciones | Revisar qué tablas exigía el enunciado | Descartamos el primer diseño de la IA y mantuvimos las seis tablas del equipo. La IA preparó las migraciones | Contrasté la propuesta con el enunciado y `Tablas.pdf` | Joan |
+| 06/11/2026 | Claude | API de charlas | Preparar el listado y el detalle paso a paso | Integré `TalkController` y las rutas (commit `52ef605`) | Probé el listado y el detalle en el navegador con una charla y comprobé el 404 para un ID inexistente | Joan |
+| 06/11/2026 | Claude | Inglés Oral | Buscar dos vídeos y preparar un borrador con referencias APA | Descarté el borrador. Vi los vídeos y aproveché la información pertinente | Comprobé las referencias de tiempo en el propio vídeo | Joan |
+| 09/11/2026 | Claude | Parche de backend, pruebas, documentación y CI | Poner al día las tareas pendientes | Descarté el parche y lo usé como referencia mientras programaba paso a paso | Claude ejecutó 24 pruebas y peticiones con curl en su propia copia | Joan |
+| 09–10/11/2026 | Claude | Inicio de sesión y errores JSON | Pedí una explicación para programar el token propio | Escribí el código siguiendo la guía (commits `39a9390`, `039fef1` y `c2456bc`) | Revisé la tabla de usuarios y probé el login y el logout con curl y en la web | Joan |
+| 09/11/2026 | Claude | Organización con Git | Cómo trabajar con ramas y `main` | Rama por tarea y PR revisado; no reorganicé las ramas viejas | PR revisados en el repo | Guillermo |
+| 09/11/2026 | Claude | Seeder | Escribir los datos de prueba | Adapté datos y corregí dos fallos | `migrate:fresh --seed` y `GET /api/talks` | Guillermo |
+| 10/11/2026 | Claude | Seeder | Arreglar el error al relanzarlo | Pasé todo a `firstOrCreate` | `db:seed` dos veces sin error | Guillermo |
+| 12/11/2026 | Claude | Router, páginas y login | Montar el frontend con los pasos del enunciado | Usé el código; corregí yo los errores de tecleo que dejaban la pantalla en blanco | `npm run dev`; PR #29 y #30 revisados por Joan | Guillermo |
+| 13/11/2026 | Claude | Reservar plaza y Mis reservas | Pedí ayuda paso a paso para entender la lógica | Escribí el código por partes (commits `3b62b6f`, `dbe88df` y `c5492ad`) | Probé con curl los resultados del caso 5 | Joan |
+| 13/11/2026 | Claude | Diseño de Interfaces | Qué pide el módulo para los estilos | Lista de control; vimos que el CSS era aún el de Vite | Contraste con el enunciado | Guillermo |
+| 15/11/2026 | Claude | Primera versión del diseño | Diseño limpio y fluido | Se descartó al pasar a la propuesta de rediseño | Capturas en móvil y escritorio | Guillermo |
 | 15/11/2026 | Claude | Presentación del checkpoint | Preparar la presentación completa y una versión corta de 7 diapositivas | Usé la presentación como base y relleno a mano los huecos | Pendiente de concretar | Alberto |
+| 16/11/2026 | Claude | Planificación del checkpoint | Pedí un diagnóstico, una plantilla de memoria, un tablero y un PPT | Copié el tablero a Drive. El borrador indica que la plantilla, el tablero y el PPT seguían sin utilizarse | — | Joan |
+| 16/11/2026 | Claude | MySQL y rescate de documentos | Investigar por qué Laravel no conectaba | Seguí los pasos para liberar el puerto 3306 y arrancar el MySQL de Homebrew | La web volvió a cargar las charlas | Joan |
+| 16/11/2026 | Claude | Seeder | Añadir a Carla para probar una charla sin plazas | Acepté el cambio (commit `1c4b42a`) | Recargué los datos de prueba y comprobé que Carla recibía `talk_full` | Joan |
+| 16/11/2026 | Claude | Zona horaria y errores de la API | Revisar el desfase de una hora y las respuestas con datos internos | Acepté el cambio (commit `b0fcd15`) | Verifiqué la hora en el navegador. La prueba automática se añadió el 17/11 | Joan |
+| 16/11/2026 | Claude Code (Fable) | Material de referencia en `~/sabitech-referencia` | Preparar una versión de referencia a partir del enunciado y el repositorio | Descarté los 17 commits y los materiales generados para la entrega | — | Joan |
+| 16/11/2026 | Claude | Paso de la demo al frontend | Aplicar el diseño en el proyecto | Aceptado sin el modo de ejemplo | Recorrido con el backend real; revisión de Alberto en el PR #34 | Guillermo |
+| 16/11/2026 | Claude | Identidad Umbral Labs | Colores, logo y nombre | Colores y firma sí; nombre no | Capturas y PR #37 revisado por Joan | Guillermo |
 | 16/11/2026 | Claude | Reparto de tareas | Hacer un Excel con el reparto y el organigrama según lo que cada uno hace de verdad | Usé el reparto como guía para completar las tareas | Pendiente de concretar | Alberto |
+| 17/11/2026 | Claude | Pruebas, CI, API, modelo de datos y README | Escribir pruebas, recuperar la CI y documentar el código real | Revisé la propuesta y se ajustaron Laravel, el texto de la API y las acciones de CI. También se quitó un archivo vacío | 22 pruebas del backend correctas. Lint y build sin errores | Joan |
+| 17/11/2026 | Claude | Auditoría del checkpoint y revisión de `tests-docs-ci` | Contrastar el proyecto con el enunciado | Aproveché el plan y el reparto de tareas | Claude probó en un entorno aislado SQLite, MySQL, la API, ocho intentos simultáneos para la última plaza y el recorrido en navegador | Joan |
+| 17/11/2026 | Claude | Registro de IA | Reconstruir los usos a partir de chats, Git y documentos | Completé el borrador con un cuestionario | Revisé las referencias a chats, archivos y commits | Joan |
+| 17/11/2026 | Codex | API, modelo de datos y README | Contrastar la documentación con el código y las migraciones y corregir las discrepancias | Acepté las correcciones de la documentación | Comparación con las rutas, el frontend y las migraciones | Joan |
+| 17/11/2026 | ChatGPT | Registro de IA, README y demás archivos revisados | Pasar el borrador del registro a Markdown y revisar el README y los demás archivos | Usé la ayuda para convertir el registro y revisar la documentación del proyecto | Comparé el registro con el borrador y la documentación con los archivos del proyecto | Joan |
+| 17/11/2026 | Claude | Auditoría del frontend | Dónde arreglar cada aviso | Cambios hechos por mí en 4 archivos | 9 pruebas manuales y `npm run build` | Guillermo |
+| 17/11/2026 | Claude con acceso al proyecto | Capturas de las pruebas | Sacar las capturas del recorrido para la memoria | 12 capturas en `docs/capturas_pruebas/` | Revisadas una a una contra la web | Guillermo |
+| 17/11/2026 | Claude | Documentación y memoria | Redactar `pruebas.md`, `permisos.md`, `digitalizacion.md` y la memoria | Pedí un tono más natural y revisé el contenido | Comparado con el código y las pruebas | Guillermo |
 | 17/11/2026 | Claude | IPE II: validación | Proponer las preguntas de las entrevistas y resumir las respuestas | Usé las preguntas con dos personas y pegué sus respuestas tal cual | Resumen comparado punto por punto con las respuestas originales | Alberto |
 | 17/11/2026 | Claude | Tabla de eventos, estados y errores del frontend | Describir solo lo que existe en el código de `frontend/src` | PR #39; después se corrigieron tres puntos en la PR #41 | Tabla contrastada con el código y la API | Alberto |
 | 17–18/11/2026 | Claude | Memoria (Google Doc) | Redactar mis apartados (empresa, frontend, registro de IA y referencias) y editarlos en el documento | Revisé el texto y quité o cambié lo que no me parecía correcto | Releí el documento tras cada cambio y contrasté los datos con las fuentes | Alberto |
 | 18/11/2026 | Claude | IPE II: costes y viabilidad | Calcular horas, valorar el trabajo de los socios y proponer cuotas, alojamiento y viabilidad | Horas y cuotas decididas por el equipo. Precios de servidor, dominio y correo marcados como pendientes | Salario, 14 pagas y jornada de 1.800 horas comprobados en el BOE. Precios de terceros sin confirmar | Alberto |
 | 18/11/2026 | Claude | `docs/empresa.md` | Reescribir el apartado de empresa con lo cerrado ese día | Lo subí por la rama `ipe-empresa-costes` (PR #47, aceptada) | Revisado en la PR | Alberto |
 | 18/11/2026 | Claude | Registro de IA | Preparar mis entradas con el formato de Joan y Guillermo | Las entradas se revisan en la PR antes de aceptarlas | Pendiente de concretar | Alberto |
+| Fecha pendiente | ChatGPT | Revisión general | Pedí una segunda comprobación del proyecto | Contrasté respuestas de Claude | Pendiente de concretar | Joan |
